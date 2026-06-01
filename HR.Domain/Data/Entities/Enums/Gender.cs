@@ -1,4 +1,4 @@
-﻿namespace HR.Domain.Entities.Enums
+﻿namespace HR.Domain.Data.Entities.Enums
 {
     public enum Gender
     {

@@ -1,3 +1,5 @@
+using HR.Infrastructure.Extensions;
+
 namespace HR.API
 {
     public class Program
@@ -9,6 +11,7 @@ namespace HR.API
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddInfrastructure(builder.Configuration);
 
             var app = builder.Build();
 

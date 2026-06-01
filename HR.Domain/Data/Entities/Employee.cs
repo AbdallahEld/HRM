@@ -1,7 +1,7 @@
-﻿using HR.Domain.Entities.Enums;
+﻿using HR.Domain.Data.Entities.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HR.Domain.Entities
+namespace HR.Domain.Data.Entities
 {
     public class Employee : BaseEntity
     {

@@ -1,4 +1,4 @@
-﻿namespace HR.Domain.Entities
+﻿namespace HR.Domain.Data.Entities
 {
     public class BaseEntity
     {

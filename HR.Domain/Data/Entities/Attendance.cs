@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HR.Domain.Entities
+namespace HR.Domain.Data.Entities
 {
     public class Attendance : BaseEntity
     {
