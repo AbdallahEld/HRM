@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HR.Domain.Data.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace HR.Infrastructure.Persistance
 {
@@ -6,6 +7,7 @@ namespace HR.Infrastructure.Persistance
     {
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(EmployeeConfiguration).Assembly);
             base.OnModelCreating(modelBuilder);
         }
 
