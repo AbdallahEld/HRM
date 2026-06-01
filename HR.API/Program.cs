@@ -1,4 +1,5 @@
 using HR.Infrastructure.Extensions;
+using Scalar.AspNetCore;
 
 namespace HR.API
 {
@@ -11,9 +12,16 @@ namespace HR.API
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddOpenApi();
             builder.Services.AddInfrastructure(builder.Configuration);
 
             var app = builder.Build();
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.MapOpenApi();
+                app.MapScalarApiReference();
+            }
 
             // Configure the HTTP request pipeline.
 
