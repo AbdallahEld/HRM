@@ -1,4 +1,5 @@
 ﻿using HR.Domain.Data.Configuration;
+using HR.Domain.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace HR.Infrastructure.Persistance
@@ -11,5 +12,12 @@ namespace HR.Infrastructure.Persistance
             base.OnModelCreating(modelBuilder);
         }
 
+        DbSet<Employee> Employees => Set<Employee>();
+        DbSet<Department> Departments => Set<Department>();
+        DbSet<Attendance> Attendances => Set<Attendance>();
+        DbSet<Leave> Leaves => Set<Leave>();
+        DbSet<Training> Trainings => Set<Training>();
+        DbSet<Payroll> Payrolls => Set<Payroll>();
+        DbSet<EmployeeTrainings> EmployeeTrainings => Set<EmployeeTrainings>();
     }
 }

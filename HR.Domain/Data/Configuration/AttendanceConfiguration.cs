@@ -8,10 +8,37 @@ namespace HR.Domain.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Attendance> builder)
         {
+            builder.Property(a => a.Date)
+               .IsRequired();
+
+            builder.Property(a => a.TimeIn)
+                   .IsRequired();
+
+            builder.Property(a => a.TimeOut)
+                   .IsRequired();
+
+            builder.Property(a => a.Status)
+                   .HasConversion<string>()
+                   .HasMaxLength(20)
+                   .IsRequired();
+
+            builder.Property(a => a.Source)
+                   .HasConversion<string>()
+                   .HasMaxLength(30)
+                   .IsRequired();
+
+            builder.HasIndex(a => new { a.EmployeeId, a.Date })
+                   .IsUnique();
+
             builder.HasOne(a => a.Employee)
                    .WithMany(e => e.Attendances)
                    .HasForeignKey(a => a.EmployeeId)
                    .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(a => a.Location)
+                   .WithMany(a => a.Attendances)
+                   .HasForeignKey(a => a.LocationId)
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

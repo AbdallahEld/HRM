@@ -12,6 +12,14 @@ namespace HR.Domain.Data.Configuration
                    .IsRequired()
                    .HasMaxLength(100);
 
+            builder.Property(d => d.CostCenter)
+                   .IsRequired()
+                   .HasMaxLength(20);
+
+            builder.HasIndex(d => d.Name)
+                   .IsUnique();
+
+
             builder.HasOne(d => d.Manager)
                    .WithOne(e => e.ManagedDepartment)
                    .HasForeignKey<Department>(d => d.ManagerId)

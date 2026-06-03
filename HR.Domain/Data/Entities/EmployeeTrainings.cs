@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using HR.Domain.Data.Entities.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HR.Domain.Data.Entities
 {
@@ -17,5 +18,8 @@ namespace HR.Domain.Data.Entities
         [InverseProperty("EmployeeTrainings")]
         public Training Training { get; set; }
         //-------------------------------------------------------------------------------//
+        public CompletionStatus CompletionStatus { get; set; }
+        public int Score { get; set; }
+
     }
 }
