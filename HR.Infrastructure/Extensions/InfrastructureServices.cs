@@ -1,4 +1,5 @@
-﻿using HR.Infrastructure.Persistance;
+﻿using HR.Domain.UnitOfWork;
+using HR.Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,8 @@ namespace HR.Infrastructure.Extensions
             {
                 options.UseSqlServer (connectionString);
             });
+
+            services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
         }
     }
 }
