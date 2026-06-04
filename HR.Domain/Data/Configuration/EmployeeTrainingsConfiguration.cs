@@ -10,13 +10,21 @@ namespace HR.Domain.Data.Configuration
         {
             builder.HasKey(et => new { et.EmployeeId, et.TrainingId });
 
+            builder.Property(et => et.CompletionStatus)
+                   .HasConversion<string>()
+                   .HasMaxLength(30)
+                   .IsRequired();
+
+
             builder.HasOne(et => et.Employee)
                    .WithMany(e => e.EmployeeTrainings)
-                   .HasForeignKey(et => et.EmployeeId);
+                   .HasForeignKey(et => et.EmployeeId)
+                   .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(et => et.Training)
                    .WithMany(t => t.EmployeeTrainings)
-                   .HasForeignKey(et => et.TrainingId);
+                   .HasForeignKey(et => et.TrainingId)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

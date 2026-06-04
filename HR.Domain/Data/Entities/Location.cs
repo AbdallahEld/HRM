@@ -7,7 +7,7 @@ namespace HR.Domain.Data.Entities
 {
     public class Location : BaseEntity
     {
-        public bool IsRemote { get; set; }
+        public bool IsRemote { get; set; } = false;
         public string? Address { get; set; }
         public decimal? Lat { get; set; }
         public decimal? Long { get; set; }

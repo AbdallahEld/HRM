@@ -10,24 +10,18 @@ namespace HR.Domain.Data.Entities
         public LeaveStatus Status { get; set; }
 
         //---------------------------One To Many Relationship----------------------------//
-        [ForeignKey("Employee")]
         public int ApproverId { get; set; }
-        [InverseProperty("ApprovedLeaves")]
         public Employee Approver { get; set; }
         //-------------------------------------------------------------------------------//
-        public DateOnly ApprovedAt { get; set; }
+        public DateOnly? ApprovedAt { get; set; }
 
         //---------------------------One To Many Relationship----------------------------//
-        [ForeignKey("LeaveType")]
         public int LeaveTypeId { get; set; }
-        [InverseProperty("Leaves")]
         public LeaveType LeaveType { get; set; }
         //-------------------------------------------------------------------------------//
 
         //---------------------------One To Many Relationship----------------------------//
-        [ForeignKey("Employee")]
         public int EmployeeId { get; set; }
-        [InverseProperty("Leaves")]
         public Employee Employee { get; set; }
         //-------------------------------------------------------------------------------//
     }

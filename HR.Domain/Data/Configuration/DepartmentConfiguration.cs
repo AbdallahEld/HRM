@@ -19,6 +19,10 @@ namespace HR.Domain.Data.Configuration
             builder.HasIndex(d => d.Name)
                    .IsUnique();
 
+            builder.HasOne(d => d.ParentDepartment)
+                   .WithMany(d => d.SubDepartments)
+                   .HasForeignKey(d => d.ParentDepartmentId)
+                   .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(d => d.Manager)
                    .WithOne(e => e.ManagedDepartment)

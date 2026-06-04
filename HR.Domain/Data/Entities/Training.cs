@@ -7,7 +7,7 @@ namespace HR.Domain.Data.Entities
         public string Title { get; set; }
         public string? Description { get; set; }
         public DateOnly Date { get; set; }
-        public int DurationInHours { get; set; }
+        public int DurationInHours { get; set; } = 0;
         //---------------------------One To Many Relationship----------------------------//
         [InverseProperty("Training")]
         public List<EmployeeTrainings> EmployeeTrainings { get; set; } = new List<EmployeeTrainings>();

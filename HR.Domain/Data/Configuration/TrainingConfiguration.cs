@@ -14,6 +14,12 @@ namespace HR.Domain.Data.Configuration
 
             builder.Property(t => t.Description)
                    .HasMaxLength(1000);
+
+            builder.Property(t => t.Date)
+                   .IsRequired();
+
+            builder.Property(t => t.DurationInHours)
+                   .IsRequired();
         }
     }
 }

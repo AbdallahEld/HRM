@@ -15,24 +15,55 @@ namespace HR.Domain.Data.Configuration
             builder.Property(e => e.LastName)
                    .IsRequired()
                    .HasMaxLength(50);
-            
-            builder.Property(e => e.Email)
-                   .IsRequired()
-                   .HasMaxLength(100);
 
              builder.Property(e => e.PhoneNumber)
-                   .HasMaxLength(20);
+                    .HasMaxLength(20);
 
              builder.Property(e => e.NationalId)
-                   .HasMaxLength(20);
+                    .IsRequired()
+                    .HasMaxLength(20);
 
              builder.Property(e => e.Position)
-                   .IsRequired()
-                   .HasMaxLength(100);
+                    .IsRequired()
+                    .HasMaxLength(100);
 
-            builder.HasOne(e => e.department)
+            builder.Property(e => e.Nationality)
+                   .HasMaxLength(50);
+
+            builder.Property(e => e.EmergencyContactName).HasMaxLength(100);
+            builder.Property(e => e.EmergencyContactPhone).HasMaxLength(20);
+
+            builder.HasIndex(e => e.NationalId)
+                   .IsUnique();
+
+            builder.Property(e => e.Gender)
+                   .HasConversion<string>()
+                   .HasMaxLength(20)
+                   .IsRequired();
+
+            builder.Property(e => e.EmploymentType)
+                   .HasConversion<string>()
+                   .HasMaxLength(30)
+                   .IsRequired();
+
+            builder.Property(e => e.EmploymentStatus)
+                   .HasConversion<string>()
+                   .HasMaxLength(30)
+                   .IsRequired();
+
+            builder.HasOne(e => e.Department)
                    .WithMany(e => e.Employees)
                    .HasForeignKey(e => e.DepartmentId)
+                   .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(e => e.Manager)
+                   .WithMany(e => e.Subordinates)
+                   .HasForeignKey(e => e.ManagerId)
+                   .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(e => e.ApprovedLeaves)
+                   .WithOne(l => l.Approver) 
+                   .HasForeignKey(l => l.ApproverId)
                    .OnDelete(DeleteBehavior.Restrict);
         }
     }

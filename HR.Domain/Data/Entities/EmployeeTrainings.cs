@@ -19,7 +19,7 @@ namespace HR.Domain.Data.Entities
         public Training Training { get; set; }
         //-------------------------------------------------------------------------------//
         public CompletionStatus CompletionStatus { get; set; }
-        public int Score { get; set; }
+        public int Score { get; set; } = 0;
 
     }
 }

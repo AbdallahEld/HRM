@@ -17,7 +17,7 @@ namespace HR.Domain.Data.Entities
         //-------------------------------------------------------------------------------//
 
         //---------------------------One To Many Relationship----------------------------//
-        [InverseProperty("department")]
+        [InverseProperty("Department")]
         public List<Employee> Employees { get; set; } = new List<Employee>();
         //-------------------------------------------------------------------------------//
 

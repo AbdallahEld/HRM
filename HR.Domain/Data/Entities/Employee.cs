@@ -7,14 +7,12 @@ namespace HR.Domain.Data.Entities
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int Age { get; set; }
         public DateOnly DateOfBirth { get; set; }
         public Gender Gender { get; set; }
-        public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string NationalId { get; set; }
         public EmploymentType EmploymentType { get; set; }
-        public EmploymentStatus EmployementStatus { get; set; }
+        public EmploymentStatus EmploymentStatus { get; set; }
         public DateTime? ProbationEndDate { get; set; }
         public string? EmergencyContactName { get; set; }
         public string? EmergencyContactPhone { get; set; }
@@ -22,17 +20,17 @@ namespace HR.Domain.Data.Entities
         public DateOnly HireDate { get; set; }
         public string Nationality { get; set; }
         //---------------------------Self Relationship-----------------------------------//
-        [ForeignKey("manager")]
+        [ForeignKey("Manager")]
         public int? ManagerId { get; set; }
-        [InverseProperty("employees")]
-        public Employee manager { get; set; }
-        [InverseProperty("manager")]
-        public List<Employee> employees { get; set; }
+        [InverseProperty("Subordinates")]
+        public Employee Manager { get; set; }
+        [InverseProperty("Manager")]
+        public List<Employee> Subordinates { get; set; }
         //---------------------------One To Many Relationship----------------------------//
         [ForeignKey("Department")]
         public int DepartmentId { get; set; }
         [InverseProperty("Employees")]
-        public Department? department { get; set; }
+        public Department? Department { get; set; }
         //-------------------------------------------------------------------------------//
 
         //---------------------------One To One Relationship-----------------------------//
