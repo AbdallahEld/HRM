@@ -1,5 +1,7 @@
-﻿using HR.Domain.UnitOfWork;
+﻿using HR.Domain.Repository;
+using HR.Domain.UnitOfWork;
 using HR.Infrastructure.Persistance;
+using HR.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +18,8 @@ namespace HR.Infrastructure.Extensions
                 options.UseSqlServer (connectionString);
             });
 
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<IAttendanceRepository, AttendanceRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
         }
     }
