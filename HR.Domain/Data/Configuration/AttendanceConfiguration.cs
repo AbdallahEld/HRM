@@ -12,10 +12,10 @@ namespace HR.Domain.Data.Configuration
                .IsRequired();
 
             builder.Property(a => a.TimeIn)
-                   .IsRequired();
+                   .IsRequired(false);
 
             builder.Property(a => a.TimeOut)
-                   .IsRequired();
+                   .IsRequired(false);
 
             builder.Property(a => a.Status)
                    .HasConversion<string>()
@@ -38,6 +38,11 @@ namespace HR.Domain.Data.Configuration
             builder.HasOne(a => a.Location)
                    .WithMany(a => a.Attendances)
                    .HasForeignKey(a => a.LocationId)
+                   .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(a => a.Shift)
+                   .WithMany(s => s.Attendances)
+                   .HasForeignKey(a => a.ShiftId)
                    .OnDelete(DeleteBehavior.Restrict);
         }
     }
