@@ -8,9 +8,6 @@ namespace HR.Domain.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Payroll> builder)
         {
-            builder.Property(p => p.Salary)
-                   .IsRequired()
-                   .HasPrecision(18, 2);
 
             builder.Property(p => p.GrossPay)
                    .IsRequired()

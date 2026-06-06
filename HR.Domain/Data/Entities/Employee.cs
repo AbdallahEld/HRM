@@ -14,8 +14,8 @@ namespace HR.Domain.Data.Entities
         public EmploymentType EmploymentType { get; set; }
         public EmploymentStatus EmploymentStatus { get; set; }
         public DateTime? ProbationEndDate { get; set; }
-        public string? EmergencyContactName { get; set; }
-        public string? EmergencyContactPhone { get; set; }
+        public decimal? BaseSalary { get; set; }
+        public decimal? HourlyRate { get; set; }
         public string Position { get; set; }
         public DateOnly HireDate { get; set; }
         public string Nationality { get; set; }

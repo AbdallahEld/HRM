@@ -5,7 +5,6 @@ namespace HR.Domain.Data.Entities
 {
     public class Payroll : BaseEntity
     {
-        public decimal Salary { get; set; }
         public decimal NetPay { get; set; }
         public decimal GrossPay { get; set; }
         public decimal TaxDeduction { get; set; } = 0.00M;
