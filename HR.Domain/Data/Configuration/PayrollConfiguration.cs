@@ -13,11 +13,7 @@ namespace HR.Domain.Data.Configuration
                    .IsRequired()
                    .HasPrecision(18, 2);
 
-            builder.Property(p => p.TaxDeduction)
-                   .IsRequired()
-                   .HasPrecision(18, 2);
-
-            builder.Property(p => p.OtherDeductions)
+            builder.Property(p => p.TotalDeductions)
                    .IsRequired()
                    .HasPrecision(18, 2);
 

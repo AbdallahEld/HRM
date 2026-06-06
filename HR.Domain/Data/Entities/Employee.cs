@@ -63,5 +63,9 @@ namespace HR.Domain.Data.Entities
         public List<EmployeeTrainings> EmployeeTrainings { get; set; } = new List<EmployeeTrainings>();
         //-------------------------------------------------------------------------------//
 
+        //---------------------------One To Many Relationship----------------------------//
+        public List<EmployeeDeductions> EmployeeDeductions { get; set; } = new List<EmployeeDeductions>();
+        //-------------------------------------------------------------------------------//
+
     }
 }
