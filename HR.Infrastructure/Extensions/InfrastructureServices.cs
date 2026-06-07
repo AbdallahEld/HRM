@@ -18,8 +18,17 @@ namespace HR.Infrastructure.Extensions
                 options.UseSqlServer (connectionString);
             });
 
-            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             services.AddScoped<IAttendanceRepository, AttendanceRepository>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IEmployeeDeductionsRepository, EmployeeDeductionsRepository>();
+            services.AddScoped<IEmployeeTrainingsRepository, EmployeeTrainingsRepository>();
+            services.AddScoped<ILeaveRepository, LeaveRepository>();
+            services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
+            services.AddScoped<ILocationRepository, LocationRepository>();
+            services.AddScoped<IPayrollRepository, PayrollRepository>();
+            services.AddScoped<IShiftRepository, ShiftRepository>();
+            services.AddScoped<ITrainingRepository, TrainingRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
         }
     }

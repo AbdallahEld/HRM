@@ -66,6 +66,14 @@ namespace HR.Domain.Data.Entities
         //---------------------------One To Many Relationship----------------------------//
         public List<EmployeeDeductions> EmployeeDeductions { get; set; } = new List<EmployeeDeductions>();
         //-------------------------------------------------------------------------------//
+        
+        //---------------------------One To Many Relationship ---------------------------//
+        [ForeignKey("DefaultShift")]
+        public int DefaultShiftId { get; set; }
+
+        [InverseProperty("Employees")]
+        public Shift DefaultShift { get; set; }
+        //-------------------------------------------------------------------------------//
 
     }
 }
