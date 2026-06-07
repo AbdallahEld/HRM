@@ -1,10 +1,12 @@
 ﻿using HR.Domain.Data.Configuration;
 using HR.Domain.Data.Entities;
+using HR.Domain.Data.Entities.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HR.Infrastructure.Persistance
 {
-    public class HRDbContext(DbContextOptions options) : DbContext(options)
+    public class HRDbContext(DbContextOptions<HRDbContext> options) : IdentityDbContext<User, Role, string>(options)
     {
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

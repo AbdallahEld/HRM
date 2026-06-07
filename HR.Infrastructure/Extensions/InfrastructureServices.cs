@@ -1,7 +1,9 @@
-﻿using HR.Domain.Repository;
+﻿using HR.Domain.Data.Entities.Identity;
+using HR.Domain.Repository;
 using HR.Domain.UnitOfWork;
 using HR.Infrastructure.Persistance;
 using HR.Infrastructure.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +19,7 @@ namespace HR.Infrastructure.Extensions
             {
                 options.UseSqlServer (connectionString);
             });
+            
 
             services.AddScoped<IAttendanceRepository, AttendanceRepository>();
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
