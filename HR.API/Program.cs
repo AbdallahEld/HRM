@@ -20,6 +20,7 @@ namespace HR.API
             
             builder.Services.AddInfrastructure(builder.Configuration);
             builder.Services.AddMicrosoftIdentity();
+            builder.Services.AddCORS();
 
 
             var app = builder.Build();
@@ -33,6 +34,8 @@ namespace HR.API
             // Configure the HTTP request pipeline.
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowAngular");
 
             app.UseAuthorization();
 
