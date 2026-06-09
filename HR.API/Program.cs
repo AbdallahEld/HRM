@@ -1,3 +1,4 @@
+using HR.API.Extensions;
 using HR.Domain.Data.Entities.Identity;
 using HR.Infrastructure.Extensions;
 using HR.Infrastructure.Persistance;
@@ -18,24 +19,8 @@ namespace HR.API
             builder.Services.AddOpenApi();
             
             builder.Services.AddInfrastructure(builder.Configuration);
+            builder.Services.AddMicrosoftIdentity();
 
-            builder.Services.AddIdentity<User, Role>()
-                            .AddEntityFrameworkStores<HRDbContext>()
-                            .AddDefaultTokenProviders();
-
-            builder.Services.Configure<IdentityOptions>(options =>
-            {
-                options.SignIn.RequireConfirmedEmail = false;
-                options.SignIn.RequireConfirmedPhoneNumber = false;
-
-                options.User.RequireUniqueEmail = true;
-
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireDigit = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequiredLength = 6;
-            });
 
             var app = builder.Build();
 
