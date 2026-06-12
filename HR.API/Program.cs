@@ -1,4 +1,5 @@
 using HR.API.Extensions;
+using HR.API.Helper;
 using HR.Domain.Data.Entities.Identity;
 using HR.Infrastructure.Extensions;
 using HR.Infrastructure.Persistance;
@@ -9,7 +10,7 @@ namespace HR.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,17 @@ namespace HR.API
 
 
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                var roleManager = services.GetRequiredService<RoleManager<Role>>();
+                var userManager = services.GetRequiredService<UserManager<User>>();
+
+                await AdminSeeder.SeedRolesAsync(roleManager);
+                await AdminSeeder.SeedAdminAsync(roleManager, userManager);
+            }
 
             if (app.Environment.IsDevelopment())
             {
