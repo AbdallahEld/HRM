@@ -1,4 +1,6 @@
-﻿using HR.Domain.Data.Entities.Identity;
+﻿using HR.Application.Account.DTOs;
+using HR.Application.Common.Interfaces;
+using HR.Domain.Data.Entities.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,8 +13,10 @@ namespace HR.API.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        private readonly ITokenService _tokenService;
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService)
         {
+            _tokenService = tokenService;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -33,20 +37,9 @@ namespace HR.API.Controllers
             {
                 DisplayName = User.UserName,
                 Email = User.Email,
-                Token = Guid.NewGuid().ToString() // This is a placeholder. In a real application, you would generate a JWT or similar token here.
+                Token = await _tokenService.GenerateTokenAsync(User),
             };
             return Ok(returnedUser);
         }
-    }
-    public class LoginDTO
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
-    }
-    public class UserDTO
-    {
-        public string DisplayName { get; set; }
-        public string Email { get; set; }
-        public string Token { get; set; }
     }
 }
