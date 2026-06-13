@@ -49,6 +49,7 @@ namespace HR.API
 
             app.UseCors("AllowAngular");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
