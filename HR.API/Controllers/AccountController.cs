@@ -20,6 +20,10 @@ namespace HR.API.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
+        public async Task<IActionResult> Register(RegisterDTO model)
+        {
+            return Ok(model);
+        }
         [HttpPost("login")]
         public async Task <IActionResult> Login(LoginDTO model)
         {
