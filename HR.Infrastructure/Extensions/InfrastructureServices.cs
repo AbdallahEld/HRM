@@ -1,6 +1,8 @@
-﻿using HR.Domain.Data.Entities.Identity;
+﻿using HR.Application.Common.Interfaces;
+using HR.Domain.Data.Entities.Identity;
 using HR.Domain.Repository;
 using HR.Domain.UnitOfWork;
+using HR.Infrastructure.Identity.JWT;
 using HR.Infrastructure.Persistance;
 using HR.Infrastructure.Repository;
 using Microsoft.AspNetCore.Identity;
@@ -32,6 +34,7 @@ namespace HR.Infrastructure.Extensions
             services.AddScoped<IPayrollRepository, PayrollRepository>();
             services.AddScoped<IShiftRepository, ShiftRepository>();
             services.AddScoped<ITrainingRepository, TrainingRepository>();
+            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
         }
     }

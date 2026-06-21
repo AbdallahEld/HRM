@@ -23,6 +23,7 @@ namespace HR.API
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
             builder.Services.AddMicrosoftIdentity();
+            builder.Services.AddJWT(builder.Configuration);
             builder.Services.AddCORS();
 
 
