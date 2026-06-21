@@ -1,5 +1,6 @@
 ﻿using HR.Application.Departments.DTOs;
 using HR.Domain.Repository;
+using HR.Domain.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,11 +9,11 @@ using System.Text;
 namespace HR.Application.Departments.Queries.GetAllDepartments
 {
     public class GetAllDepartmentsQueryHandler (
-        IDepartmentRepository departmentRepository) : IRequestHandler<GetAllDepartmentsQuery, IEnumerable<DepartmentReadDTO>>
+        IUnitOfWork unitOfWork) : IRequestHandler<GetAllDepartmentsQuery, IEnumerable<DepartmentReadDTO>>
     {
         public async Task<IEnumerable<DepartmentReadDTO>> Handle(GetAllDepartmentsQuery request, CancellationToken cancellationToken)
         {
-            var departments = await departmentRepository.GetAllAsync();
+            var departments = await unitOfWork._DepartmentRepository.GetAllAsync();
 
             var departmentReadDTOs = departments.Select(d => new DepartmentReadDTO
             {
