@@ -10,4 +10,12 @@
     <ProjectReference Include="..\HR.Domain\HR.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Departments\Commands\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="14.1.0" />
+  </ItemGroup>
+
 </Project>

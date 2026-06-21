@@ -1,5 +1,6 @@
 using HR.API.Extensions;
 using HR.API.Helper;
+using HR.Application.Extensions;
 using HR.Domain.Data.Entities.Identity;
 using HR.Infrastructure.Extensions;
 using HR.Infrastructure.Persistance;
@@ -19,6 +20,7 @@ namespace HR.API
             builder.Services.AddControllers();
             builder.Services.AddOpenApi();
             
+            builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
             builder.Services.AddMicrosoftIdentity();
             builder.Services.AddCORS();
