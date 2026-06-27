@@ -1,6 +1,9 @@
-﻿using HR.Application.Account.DTOs;
+﻿using HR.Application.Account.Commands.RegisterEmployee;
+using HR.Application.Account.DTOs;
 using HR.Application.Common.Interfaces;
 using HR.Domain.Data.Entities.Identity;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,15 +17,31 @@ namespace HR.API.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly ITokenService _tokenService;
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService)
+        private readonly IMediator _mediator;
+        public AccountController(
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            ITokenService tokenService,
+            IMediator mediator)
         {
             _tokenService = tokenService;
             _userManager = userManager;
             _signInManager = signInManager;
+            _mediator = mediator;
         }
-        public async Task<IActionResult> Register(RegisterDTO model)
+
+        [HttpPost("register")]
+        [Authorize(Roles = "HRManager,SystemAdmin")]
+        public async Task<IActionResult> Register(RegisterEmployeeCommand command)
         {
-            return Ok(model);
+            var result = await _mediator.Send(command);
+
+            if (!result.IsSuccess)
+            {
+                return BadRequest(new { Errors = result.Errors });
+            }
+
+            return Created(string.Empty, new { Message = "Employee registered successfully." });
         }
         [HttpPost("login")]
         public async Task <IActionResult> Login(LoginDTO model)
