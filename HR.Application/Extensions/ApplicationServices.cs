@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using HR.Application.Behaviors;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +14,10 @@ namespace HR.Application.Extensions
         {
             var applicationAssembly = typeof(ApplicationServices).Assembly;
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(applicationAssembly));
+
+            services.AddValidatorsFromAssembly(applicationAssembly);
+
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         }
     }
 }
