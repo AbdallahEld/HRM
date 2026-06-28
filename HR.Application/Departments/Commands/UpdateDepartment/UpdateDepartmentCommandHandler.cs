@@ -1,10 +1,12 @@
-﻿using HR.Domain.UnitOfWork;
+﻿using HR.Application.Departments.Services;
+using HR.Domain.UnitOfWork;
 using MediatR;
 
 namespace HR.Application.Departments.Commands.UpdateDepartment
 {
     public class UpdateDepartmentCommandHandler (
-        IUnitOfWork unitOfWork) : IRequestHandler<UpdateDepartmentCommand, int>
+        IUnitOfWork unitOfWork,
+        IDepartmentCapacityChecker capacityChecker) : IRequestHandler<UpdateDepartmentCommand, int>
     {
         public async Task<int> Handle(UpdateDepartmentCommand request, CancellationToken cancellationToken)
         {
@@ -14,6 +16,13 @@ namespace HR.Application.Departments.Commands.UpdateDepartment
             {
                 throw new Exception($"Department With Id = {request.Id} is not Found");
             }
+
+            if (request.ParentDepartmentId.HasValue)
+            {
+                await capacityChecker.ValidateChildCapacityAsync(request.ParentDepartmentId.Value, request.HeadCount, request.Id);
+            }
+
+            await capacityChecker.ValidateParentCapacityAsync(request.Id, request.HeadCount);
 
             department.Name = request.Name;
             department.CostCenter = request.CostCenter;
