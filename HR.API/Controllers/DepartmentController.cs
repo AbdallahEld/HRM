@@ -4,6 +4,8 @@ using HR.Application.Departments.Commands.UpdateDepartment;
 using HR.Application.Departments.DTOs;
 using HR.Application.Departments.Queries.GetAllDepartments;
 using HR.Application.Departments.Queries.GetDepartmentById;
+using HR.Application.Shared;
+using HR.Domain.Data.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,17 +18,17 @@ namespace HR.API.Controllers
         IMediator mediator) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DepartmentReadDTO>>> GetAll([FromQuery] GetAllDepartmentsQuery query)
+        public async Task<ActionResult> GetAll([FromQuery] GetAllDepartmentsQuery query)
         {
             var departments = await mediator.Send(query);
-            return Ok(departments);
+            return Ok(ApiResponse<IEnumerable<DepartmentReadDTO>>.SuccessResponse(departments, "Departments retrieved successfully"));
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<DepartmentReadDTO>> GetById ([FromRoute] int id)
+        public async Task<ActionResult> GetById ([FromRoute] int id)
         {
             var department = await mediator.Send(new GetDepartmentByIdQuery(id));
-            return Ok(department);
+            return Ok(ApiResponse<DepartmentReadDTO>.SuccessResponse(department, "Departments retrieved successfully"));
         }
 
         [HttpPost]

@@ -1,3 +1,4 @@
+using HR.API.ExceptionHandling;
 using HR.API.Extensions;
 using HR.API.Helper;
 using HR.Application.Extensions;
@@ -17,7 +18,14 @@ namespace HR.API
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+            builder.Services.AddProblemDetails();
+
+            builder.Services.AddControllers()
+                .ConfigureApiBehaviorOptions(options =>
+                {
+                    options.SuppressModelStateInvalidFilter = true;
+                });
             builder.Services.AddOpenApi();
             
             builder.Services.AddApplication();
@@ -47,6 +55,7 @@ namespace HR.API
             }
 
             // Configure the HTTP request pipeline.
+            app.UseExceptionHandler();
 
             app.UseHttpsRedirection();
 
