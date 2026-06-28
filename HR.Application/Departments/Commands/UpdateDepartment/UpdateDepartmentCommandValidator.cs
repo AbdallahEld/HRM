@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HR.Application.Departments.Commands.CreateDepartment
+namespace HR.Application.Departments.Commands.UpdateDepartment
 {
-    public class CreateDepartmentCommandValidator : AbstractValidator<CreateDepartmentCommand>
+    public class UpdateDepartmentCommandValidator : AbstractValidator<UpdateDepartmentCommand>
     {
-        public CreateDepartmentCommandValidator()
+        UpdateDepartmentCommandValidator() 
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Department name is required")
