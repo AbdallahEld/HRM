@@ -24,7 +24,7 @@ namespace HR.Application.Departments.Services
             var children = await _unitOfWork._DepartmentRepository
                                             .FindAsync(d =>
                                                 d.ParentDepartmentId == parentId &&
-                                                (currentDepartmentId.HasValue || d.Id != currentDepartmentId.Value)
+                                                (!currentDepartmentId.HasValue || d.Id != currentDepartmentId.Value)
                                             );
 
             var otherChildrenHeadCount = children.Sum(d => d.HeadCount);

@@ -35,7 +35,7 @@ namespace HR.API.Controllers
         public async Task<IActionResult> Create([FromBody] CreateDepartmentCommand command)
         {
             var Id = await mediator.Send(command);
-            return CreatedAtAction(nameof(GetById), new { Id }, null);
+            return Ok(ApiResponse<int>.SuccessResponse(Id, $"Departments with Id: {Id} successfully created"));
         }
 
         [HttpPatch("{id:int}")]
@@ -44,7 +44,7 @@ namespace HR.API.Controllers
             command.Id = id;
             var Id = await mediator.Send(command);
 
-            return CreatedAtAction(nameof(GetById), new { Id }, null);
+            return Ok(ApiResponse<int>.SuccessResponse(Id, $"Departments with Id: {Id} successfully updated"));
         }
 
         [HttpDelete("{id:int}")]
