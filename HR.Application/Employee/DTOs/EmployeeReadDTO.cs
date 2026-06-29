@@ -1,37 +1,33 @@
-﻿using HR.Application.Account.DTOs;
+﻿using HR.Domain.Data.Entities;
 using HR.Domain.Data.Entities.Enums;
-using MediatR;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace HR.Application.Account.Commands.RegisterEmployee
+namespace HR.Application.Employee.DTOs
 {
-    public class RegisterEmployeeCommand : IRequest<RegistrationResult>
+    public class EmployeeReadDTO
     {
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public int Id { get; set; }
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string PhoneNumber { get; set; }
         public DateOnly DateOfBirth { get; set; }
         public Gender Gender { get; set; }
+        public string PhoneNumber { get; set; }
         public string NationalId { get; set; }
-        public string Nationality { get; set; }
-
         public EmploymentType EmploymentType { get; set; }
         public EmploymentStatus EmploymentStatus { get; set; }
-        public string Position { get; set; }
-        public DateOnly HireDate { get; set; }
         public DateTime? ProbationEndDate { get; set; }
-
         public decimal? BaseSalary { get; set; }
         public decimal? HourlyRate { get; set; }
+        public string Position { get; set; }
+        public DateOnly HireDate { get; set; }
+        public string Nationality { get; set; }
 
+        public int? ManagerId { get; set; }
         public int DepartmentId { get; set; }
         public int DefaultShiftId { get; set; }
-        public int? ManagerId { get; set; }
-
     }
 }

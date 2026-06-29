@@ -16,7 +16,7 @@ namespace HR.Application.Account.Commands.RegisterEmployee
     {
         public async Task<RegistrationResult> Handle(RegisterEmployeeCommand request, CancellationToken cancellationToken)
         {
-            var newEmployee = new Employee
+            var newEmployee = new HR.Domain.Data.Entities.Employee
             {
                 FirstName = request.FirstName,
                 LastName = request.LastName,
@@ -34,7 +34,7 @@ namespace HR.Application.Account.Commands.RegisterEmployee
                 HourlyRate = request.HourlyRate,
                 DepartmentId = request.DepartmentId,
                 DefaultShiftId = request.DefaultShiftId,
-                ManagerId = request.ManagerId
+                ManagerId = request.ManagerId,
             };
 
             try
@@ -58,6 +58,15 @@ namespace HR.Application.Account.Commands.RegisterEmployee
                 Email = request.Email,
                 EmployeeId = newEmployee.Id,
             };
+
+            if(userManager.FindByEmailAsync(request.Email) != null) 
+            {
+                return new RegistrationResult
+                {
+                    IsSuccess = false,
+                    Errors = new List<string> { "Email Already Exist" }
+                };
+            }
 
             var identityResult = await userManager.CreateAsync(newUser, request.Password);
 
