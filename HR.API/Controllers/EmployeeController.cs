@@ -1,11 +1,8 @@
-﻿using HR.Application.Departments.DTOs;
-using HR.Application.Departments.Queries.GetDepartmentById;
-using HR.Application.Employee.DTOs;
-using HR.Application.Employee.Queries.GetAllEmployees;
-using HR.Application.Employee.Queries.GetEmployeeById;
+﻿using HR.Application.Features.Employee.DTOs;
+using HR.Application.Features.Employee.Queries.GetAllEmployees;
+using HR.Application.Features.Employee.Queries.GetEmployeeById;
 using HR.Application.Shared;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HR.API.Controllers

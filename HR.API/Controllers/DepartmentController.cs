@@ -1,13 +1,11 @@
-﻿using HR.Application.Departments.Commands.CreateDepartment;
-using HR.Application.Departments.Commands.DeleteDepartment;
-using HR.Application.Departments.Commands.UpdateDepartment;
-using HR.Application.Departments.DTOs;
-using HR.Application.Departments.Queries.GetAllDepartments;
-using HR.Application.Departments.Queries.GetDepartmentById;
+﻿using HR.Application.Features.Departments.Commands.CreateDepartment;
+using HR.Application.Features.Departments.Commands.DeleteDepartment;
+using HR.Application.Features.Departments.Commands.UpdateDepartment;
+using HR.Application.Features.Departments.DTOs;
+using HR.Application.Features.Departments.Queries.GetAllDepartments;
+using HR.Application.Features.Departments.Queries.GetDepartmentById;
 using HR.Application.Shared;
-using HR.Domain.Data.Entities;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HR.API.Controllers

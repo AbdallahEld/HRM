@@ -1,6 +1,6 @@
-﻿using HR.Application.Account.Commands.RegisterEmployee;
-using HR.Application.Account.DTOs;
-using HR.Application.Common.Interfaces;
+﻿using HR.Application.Common.Interfaces;
+using HR.Application.Features.Account.Commands.RegisterEmployee;
+using HR.Application.Features.Account.DTOs;
 using HR.Domain.Data.Entities.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

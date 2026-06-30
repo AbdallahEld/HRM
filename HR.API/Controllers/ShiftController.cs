@@ -1,16 +1,11 @@
-﻿using HR.Application.Departments.Commands.CreateDepartment;
-using HR.Application.Departments.Commands.DeleteDepartment;
-using HR.Application.Departments.Commands.UpdateDepartment;
+﻿using HR.Application.Features.Shift.Commands.CreateShift;
+using HR.Application.Features.Shift.Commands.DeleteShift;
+using HR.Application.Features.Shift.Commands.UpdateShift;
+using HR.Application.Features.Shift.DTOs;
+using HR.Application.Features.Shift.Querries.GetAllShifts;
+using HR.Application.Features.Shift.Querries.GetShiftById;
 using HR.Application.Shared;
-using HR.Application.Shift.Commands.CreateShift;
-using HR.Application.Shift.Commands.DeleteShift;
-using HR.Application.Shift.Commands.UpdateShift;
-using HR.Application.Shift.DTOs;
-using HR.Application.Shift.Querries.GetAllShifts;
-using HR.Application.Shift.Querries.GetShiftById;
-using HR.Domain.Data.Entities;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HR.API.Controllers

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using HR.Application.Behaviors;
-using HR.Application.Departments.Services;
+using HR.Application.Features.Departments.Services;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
