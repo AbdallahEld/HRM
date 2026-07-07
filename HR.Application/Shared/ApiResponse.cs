@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace HR.Application.Shared
 {
@@ -9,9 +6,7 @@ namespace HR.Application.Shared
     {
         public bool Success { get; set; }
         public string Message { get; set; }
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public T Data { get; set; }
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public List<string> Errors { get; set; }
 
         public static ApiResponse<T> SuccessResponse(T data, string message = "Operation completed successfully")

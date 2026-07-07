@@ -7,6 +7,7 @@ using HR.Infrastructure.Extensions;
 using HR.Infrastructure.Persistance;
 using Microsoft.AspNetCore.Identity;
 using Scalar.AspNetCore;
+using System.Text.Json.Serialization;
 
 namespace HR.API
 {
@@ -25,6 +26,10 @@ namespace HR.API
                 .ConfigureApiBehaviorOptions(options =>
                 {
                     options.SuppressModelStateInvalidFilter = true;
+                })
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                 });
             builder.Services.AddOpenApi();
             
