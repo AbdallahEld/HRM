@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HR.Application.Shared;
 using MediatR;
 
 namespace HR.Application.Behaviors
@@ -25,6 +26,17 @@ namespace HR.Application.Behaviors
 
                 if(failures.Count != 0)
                 {
+                    var errors = failures.Select(e => $"{e.PropertyName}: {e.ErrorMessage}").ToList();
+
+                    if (typeof(TResponse).IsGenericType && typeof(TResponse).GetGenericTypeDefinition() == typeof(ApiResponse<>))
+                    {
+                        var resultType = typeof(TResponse).GetGenericArguments()[0];
+                        var failureMethod = typeof(ApiResponse<>)
+                            .MakeGenericType(resultType)
+                            .GetMethod(nameof(ApiResponse<object>.FailureResponse));
+
+                        return (TResponse)failureMethod!.Invoke(null, new object[] { errors, "Validation failed" })!;
+                    }
                     throw new ValidationException(failures);
                 }
             }

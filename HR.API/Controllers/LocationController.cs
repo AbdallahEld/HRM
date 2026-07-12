@@ -39,8 +39,14 @@ namespace HR.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateLocationCommand command)
         {
-            var Id = await mediator.Send(command);
-            return Ok(ApiResponse<int>.SuccessResponse(Id, $"Location with Id: {Id} successfully created"));
+            var response = await mediator.Send(command);
+
+            if(!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
         }
 
         [HttpPatch("{id:int}")]

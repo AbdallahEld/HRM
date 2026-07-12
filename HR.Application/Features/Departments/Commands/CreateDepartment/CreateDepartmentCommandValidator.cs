@@ -18,7 +18,7 @@ namespace HR.Application.Features.Departments.Commands.CreateDepartment
 
             RuleFor(x => x.CostCenter)
                 .NotEmpty().WithMessage("Cost center is required")
-                .MaximumLength(30).WithMessage("Department name cannot exceed 100 characters.");
+                .MaximumLength(30).WithMessage("Department cost center cannot exceed 30 characters.");
         }
     }
 }
