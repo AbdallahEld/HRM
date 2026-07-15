@@ -1,12 +1,14 @@
-﻿using HR.Domain.UnitOfWork;
+﻿using HR.Application.Shared;
+using HR.Domain.Data.Entities;
+using HR.Domain.UnitOfWork;
 using MediatR;
 
 namespace HR.Application.Features.Location.Commands.UpdateLocation
 {
     public class UpdateLocationCommandHandler (
-        IUnitOfWork unitOfWork) : IRequestHandler<UpdateLocationCommand, int>
+        IUnitOfWork unitOfWork) : IRequestHandler<UpdateLocationCommand, ApiResponse<int>>
     {
-        public async Task<int> Handle(UpdateLocationCommand request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<int>> Handle(UpdateLocationCommand request, CancellationToken cancellationToken)
         {
             var location = await unitOfWork._LocationRepository.GetByIdAsync(request.Id);
             if (location == null)
@@ -22,7 +24,7 @@ namespace HR.Application.Features.Location.Commands.UpdateLocation
             unitOfWork._LocationRepository.UpdateAsync(location);
             await unitOfWork.SaveChangesAsync();
 
-            return location.Id;
+            return ApiResponse<int>.SuccessResponse(location.Id, $"Location with Id: {location.Id} successfully updated");
         }
     }
 }

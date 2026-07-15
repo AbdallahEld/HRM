@@ -1,9 +1,10 @@
 ﻿using HR.Application.Features.Shift.Commands.Shared;
+using HR.Application.Shared;
 using MediatR;
 
 namespace HR.Application.Features.Shift.Commands.UpdateShift
 {
-    public class UpdateShiftCommand : IRequest<int> , IShiftCommand
+    public class UpdateShiftCommand : IRequest<ApiResponse<int>> , IShiftCommand
     {
         public int Id { get; set; }
         public string Name { get; set; }

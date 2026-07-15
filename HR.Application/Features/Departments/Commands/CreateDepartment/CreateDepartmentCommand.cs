@@ -1,11 +1,12 @@
-﻿using MediatR;
+﻿using HR.Application.Shared;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace HR.Application.Features.Departments.Commands.CreateDepartment
 {
-    public class CreateDepartmentCommand : IRequest<int>
+    public class CreateDepartmentCommand : IRequest<ApiResponse<int>>
     {
         public string Name { get; set; } 
         public string CostCenter { get; set; }

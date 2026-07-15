@@ -1,5 +1,6 @@
 ﻿using FluentValidation.Results;
 using HR.Application.Features.Departments.Services;
+using HR.Application.Shared;
 using HR.Domain.Data.Entities;
 using HR.Domain.UnitOfWork;
 using MediatR;
@@ -11,13 +12,15 @@ namespace HR.Application.Features.Departments.Commands.CreateDepartment
 {
     public class CreateDepartmentCommandHandler  (
         IUnitOfWork unitOfWork,
-        IDepartmentCapacityChecker capacityChecker): IRequestHandler<CreateDepartmentCommand, int>
+        IDepartmentCapacityChecker capacityChecker): IRequestHandler<CreateDepartmentCommand, ApiResponse<int>>
     {
-        public async Task<int> Handle(CreateDepartmentCommand request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<int>> Handle(CreateDepartmentCommand request, CancellationToken cancellationToken)
         {
             if (request.ParentDepartmentId.HasValue)
             {
-                await capacityChecker.ValidateChildCapacityAsync(request.ParentDepartmentId.Value, request.HeadCount);
+                var result = await capacityChecker.ValidateChildCapacityAsync(request.ParentDepartmentId.Value, request.HeadCount);
+                if (!result.Success)
+                    return result;
             }
 
             var department = new Department
@@ -31,7 +34,7 @@ namespace HR.Application.Features.Departments.Commands.CreateDepartment
 
             await unitOfWork._DepartmentRepository.AddAsync(department);
             await unitOfWork.SaveChangesAsync();
-            return department.Id;
+            return ApiResponse<int>.SuccessResponse(department.Id, "Department created successfully");
         }
     }
 }

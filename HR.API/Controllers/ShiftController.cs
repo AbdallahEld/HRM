@@ -32,17 +32,27 @@ namespace HR.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateShiftCommand command)
         {
-            var Id = await mediator.Send(command);
-            return Ok(ApiResponse<int>.SuccessResponse(Id, $"Shift with Id: {Id} successfully created"));
+            var response = await mediator.Send(command);
+            if(!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
         }
 
         [HttpPatch("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateShiftCommand command)
         {
             command.Id = id;
-            var Id = await mediator.Send(command);
 
-            return Ok(ApiResponse<int>.SuccessResponse(Id, $"Shift with Id: {Id} successfully updated"));
+            var response = await mediator.Send(command);
+            if(!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
         }
 
         [HttpDelete("{id:int}")]

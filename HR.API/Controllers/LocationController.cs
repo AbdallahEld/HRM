@@ -40,7 +40,6 @@ namespace HR.API.Controllers
         public async Task<IActionResult> Create([FromBody] CreateLocationCommand command)
         {
             var response = await mediator.Send(command);
-
             if(!response.Success)
             {
                 return BadRequest(response);
@@ -53,9 +52,14 @@ namespace HR.API.Controllers
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateLocationCommand command)
         {
             command.Id = id;
-            var Id = await mediator.Send(command);
 
-            return Ok(ApiResponse<int>.SuccessResponse(Id, $"Departments with Id: {Id} successfully updated"));
+            var response = await mediator.Send(command);
+            if(!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
         }
 
         [HttpDelete("{id:int}")]

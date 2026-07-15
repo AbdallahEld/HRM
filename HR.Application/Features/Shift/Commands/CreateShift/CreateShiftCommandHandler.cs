@@ -1,12 +1,14 @@
-﻿using HR.Domain.UnitOfWork;
+﻿using HR.Application.Shared;
+using HR.Domain.Data.Entities;
+using HR.Domain.UnitOfWork;
 using MediatR;
 
 namespace HR.Application.Features.Shift.Commands.CreateShift
 {
     public class CreateShiftCommandHandler (
-        IUnitOfWork unitOfWork) : IRequestHandler<CreateShiftCommand, int>
+        IUnitOfWork unitOfWork) : IRequestHandler<CreateShiftCommand, ApiResponse<int>>
     {
-        public async Task<int> Handle(CreateShiftCommand request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<int>> Handle(CreateShiftCommand request, CancellationToken cancellationToken)
         {
             var shift = new Domain.Data.Entities.Shift
             {
@@ -20,7 +22,7 @@ namespace HR.Application.Features.Shift.Commands.CreateShift
 
             await unitOfWork._ShiftRepository.AddAsync(shift);
             await unitOfWork.SaveChangesAsync();
-            return shift.Id;
+            return ApiResponse<int>.SuccessResponse(shift.Id, "Shift created successfully");
         }
     }
 }

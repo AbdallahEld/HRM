@@ -1,4 +1,5 @@
 ﻿using HR.Application.Features.Departments.Services;
+using HR.Application.Shared;
 using HR.Domain.UnitOfWork;
 using MediatR;
 
@@ -6,9 +7,9 @@ namespace HR.Application.Features.Departments.Commands.UpdateDepartment
 {
     public class UpdateDepartmentCommandHandler (
         IUnitOfWork unitOfWork,
-        IDepartmentCapacityChecker capacityChecker) : IRequestHandler<UpdateDepartmentCommand, int>
+        IDepartmentCapacityChecker capacityChecker) : IRequestHandler<UpdateDepartmentCommand, ApiResponse<int>>
     {
-        public async Task<int> Handle(UpdateDepartmentCommand request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<int>> Handle(UpdateDepartmentCommand request, CancellationToken cancellationToken)
         {
             var department = await unitOfWork._DepartmentRepository.GetByIdAsync(request.Id);
             
@@ -19,10 +20,14 @@ namespace HR.Application.Features.Departments.Commands.UpdateDepartment
 
             if (request.ParentDepartmentId.HasValue)
             {
-                await capacityChecker.ValidateChildCapacityAsync(request.ParentDepartmentId.Value, request.HeadCount, request.Id);
+                var childResult = await capacityChecker.ValidateChildCapacityAsync(request.ParentDepartmentId.Value, request.HeadCount, request.Id);
+                if (!childResult.Success)
+                    return childResult;
             }
 
-            await capacityChecker.ValidateParentCapacityAsync(request.Id, request.HeadCount);
+            var parentResult = await capacityChecker.ValidateParentCapacityAsync(request.Id, request.HeadCount);
+            if(!parentResult.Success)
+                return parentResult;
 
             department.Name = request.Name;
             department.CostCenter = request.CostCenter;
@@ -33,7 +38,7 @@ namespace HR.Application.Features.Departments.Commands.UpdateDepartment
             unitOfWork._DepartmentRepository.UpdateAsync(department);
             await unitOfWork.SaveChangesAsync();
 
-            return department.Id;
+            return ApiResponse<int>.SuccessResponse(department.Id, $"Department with Id: {department.Id} successfully updated");
         }
     }
 }

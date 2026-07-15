@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using HR.Application.Shared;
+using MediatR;
 
 namespace HR.Application.Features.Departments.Commands.UpdateDepartment
 {
-    public class UpdateDepartmentCommand : IRequest<int>
+    public class UpdateDepartmentCommand : IRequest<ApiResponse<int>>
     {
         public int Id { get; set; }
         public string Name { get; set; }

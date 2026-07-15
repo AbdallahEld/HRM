@@ -1,12 +1,14 @@
-﻿using HR.Domain.UnitOfWork;
+﻿using HR.Application.Shared;
+using HR.Domain.Data.Entities;
+using HR.Domain.UnitOfWork;
 using MediatR;
 
 namespace HR.Application.Features.Shift.Commands.UpdateShift
 {
     public class UpdateShiftCommandHandler (
-        IUnitOfWork unitOfWork) : IRequestHandler<UpdateShiftCommand, int>
+        IUnitOfWork unitOfWork) : IRequestHandler<UpdateShiftCommand, ApiResponse<int>>
     {
-        public async Task<int> Handle(UpdateShiftCommand request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<int>> Handle(UpdateShiftCommand request, CancellationToken cancellationToken)
         {
             var shift = await unitOfWork._ShiftRepository.GetByIdAsync(request.Id);
 
@@ -25,7 +27,7 @@ namespace HR.Application.Features.Shift.Commands.UpdateShift
             unitOfWork._ShiftRepository.UpdateAsync(shift);
             await unitOfWork.SaveChangesAsync();
 
-            return shift.Id;
+            return ApiResponse<int>.SuccessResponse(shift.Id, $"Shift with Id: {shift.Id} successfully updated");
         }
     }
 }

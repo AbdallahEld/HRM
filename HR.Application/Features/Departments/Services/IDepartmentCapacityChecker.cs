@@ -1,8 +1,10 @@
-﻿namespace HR.Application.Features.Departments.Services
+﻿using HR.Application.Shared;
+
+namespace HR.Application.Features.Departments.Services
 {
     public interface IDepartmentCapacityChecker
     {
-        Task ValidateChildCapacityAsync(int parentId, int newHeadCount, int? currentDepartmentId = null);
-        Task ValidateParentCapacityAsync(int departmentId, int newHeadCount);
+        Task<ApiResponse<int>> ValidateChildCapacityAsync(int parentId, int newHeadCount, int? currentDepartmentId = null);
+        Task<ApiResponse<int>> ValidateParentCapacityAsync(int departmentId, int newHeadCount);
     }
 }
