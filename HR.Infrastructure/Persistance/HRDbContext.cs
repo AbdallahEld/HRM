@@ -25,5 +25,6 @@ namespace HR.Infrastructure.Persistance
         DbSet<Shift> Shifts => Set<Shift>();
         DbSet<Location> Locations => Set<Location>();
         DbSet<EmployeeDeductions> EmployeeDeductions => Set<EmployeeDeductions>();
+        DbSet<LocationShifts> LocationShifts => Set<LocationShifts>();
     }
 }

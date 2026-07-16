@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
@@ -13,7 +13,7 @@ namespace HR.Domain.Data.Entities
         public decimal? Long { get; set; }
         //---------------------------One To Many Relationship----------------------------//
         [InverseProperty("Location")]
-        public List<Attendance> Attendances { get; set; } = new List<Attendance>();
+        public List<LocationShifts> LocationShifts { get; set; } = new List<LocationShifts>();
         //-------------------------------------------------------------------------------//
     }
 }

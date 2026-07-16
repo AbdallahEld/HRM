@@ -30,7 +30,7 @@ namespace HR.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("register")]
+        [HttpPost("registerEployee")]
         [Authorize(Roles = "HRManager,SystemAdmin")]
         public async Task<IActionResult> Register(RegisterEmployeeCommand command)
         {

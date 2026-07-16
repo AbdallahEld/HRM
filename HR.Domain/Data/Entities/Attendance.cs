@@ -14,14 +14,6 @@ namespace HR.Domain.Data.Entities
         public int EarlyDepartureMinutes { get; set; } = 0;
         public int OverTimeHours { get; set; } = 0;
 
-
-        //---------------------------One To Many Relationship----------------------------//
-        [ForeignKey("Location")]
-        public int LocationId { get; set; }
-        [InverseProperty("Attendances")]
-        public Location Location { get; set; }
-        //-------------------------------------------------------------------------------//
-
         //---------------------------One To Many Relationship----------------------------//
         [ForeignKey("Employee")]
         public int EmployeeId { get; set; }

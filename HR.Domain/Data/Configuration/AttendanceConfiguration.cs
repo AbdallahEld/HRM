@@ -35,11 +35,6 @@ namespace HR.Domain.Data.Configuration
                    .HasForeignKey(a => a.EmployeeId)
                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(a => a.Location)
-                   .WithMany(a => a.Attendances)
-                   .HasForeignKey(a => a.LocationId)
-                   .OnDelete(DeleteBehavior.Restrict);
-
             builder.HasOne(a => a.Shift)
                    .WithMany(s => s.Attendances)
                    .HasForeignKey(a => a.ShiftId)

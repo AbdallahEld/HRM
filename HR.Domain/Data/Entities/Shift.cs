@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
@@ -16,6 +16,11 @@ namespace HR.Domain.Data.Entities
 
         //---------------------------One To Many Relationship----------------------------//
         public ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
+        //-------------------------------------------------------------------------------//
+
+        //---------------------------One To Many Relationship----------------------------//
+        [InverseProperty("Shift")]
+        public List<LocationShifts> LocationShifts { get; set; } = new List<LocationShifts>();
         //-------------------------------------------------------------------------------//
 
         //---------------------------One To Many Relationship ---------------------------//
