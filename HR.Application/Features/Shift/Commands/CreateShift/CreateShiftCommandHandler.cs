@@ -1,5 +1,4 @@
 ﻿using HR.Application.Shared;
-using HR.Domain.Data.Entities;
 using HR.Domain.UnitOfWork;
 using MediatR;
 

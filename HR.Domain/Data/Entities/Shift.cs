@@ -15,10 +15,6 @@ namespace HR.Domain.Data.Entities
         public int GracePeriodMinutes { get; set; } = 0;
 
         //---------------------------One To Many Relationship----------------------------//
-        public ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
-        //-------------------------------------------------------------------------------//
-
-        //---------------------------One To Many Relationship----------------------------//
         [InverseProperty("Shift")]
         public List<LocationShifts> LocationShifts { get; set; } = new List<LocationShifts>();
         //-------------------------------------------------------------------------------//

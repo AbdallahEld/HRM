@@ -1,21 +1,30 @@
-﻿using HR.Application.Features.Account.DTOs;
-using HR.Domain.Data.Entities;
+﻿using HR.Application.Shared;
 using HR.Domain.Data.Entities.Identity;
 using HR.Domain.UnitOfWork;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HR.Application.Features.Account.Commands.RegisterEmployee
 {
     public class RegisterEmployeeCommandHandler(
         UserManager<User> userManager,
-        IUnitOfWork unitOfWork) : IRequestHandler<RegisterEmployeeCommand, RegistrationResult>
+        IUnitOfWork unitOfWork) : IRequestHandler<RegisterEmployeeCommand, ApiResponse<int>>
     {
-        public async Task<RegistrationResult> Handle(RegisterEmployeeCommand request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<int>> Handle(RegisterEmployeeCommand request, CancellationToken cancellationToken)
         {
+            var existingUser = await userManager.FindByEmailAsync(request.Email);
+            if (existingUser != null)
+            {
+                return ApiResponse<int>.FailureResponse(new List<string> { "Email already exists." }, "Registration failed");
+            }
+            
+            decimal? calculatedHourlyRate = request.HourlyRate;
+            if (request.BaseSalary.HasValue)
+            {
+                var shift = await unitOfWork._ShiftRepository.GetByIdAsync(request.DefaultShiftId);
+                calculatedHourlyRate = request.BaseSalary.Value / (shift.RequiredHours * 22);
+            }
+
             var newEmployee = new Domain.Data.Entities.Employee
             {
                 FirstName = request.FirstName,
@@ -31,60 +40,29 @@ namespace HR.Application.Features.Account.Commands.RegisterEmployee
                 HireDate = request.HireDate,
                 ProbationEndDate = request.ProbationEndDate,
                 BaseSalary = request.BaseSalary,
-                HourlyRate = request.HourlyRate,
+                HourlyRate = calculatedHourlyRate,
                 DepartmentId = request.DepartmentId,
                 DefaultShiftId = request.DefaultShiftId,
                 ManagerId = request.ManagerId,
             };
 
-            try
-            {
-                await unitOfWork._EmployeeRepository.AddAsync(newEmployee);
-                await unitOfWork.SaveChangesAsync();
-            }
-            catch
-            {
-
-                return new RegistrationResult
-                {
-                    IsSuccess = false,
-                    Errors = new List<string> { "An unexpected error occurred during registration. The process was aborted." }
-                };
-            }
-
             var newUser = new User
             {
                 UserName = request.Email,
                 Email = request.Email,
-                EmployeeId = newEmployee.Id,
+                Employee = newEmployee,
             };
-
-            if(userManager.FindByEmailAsync(request.Email) != null) 
-            {
-                return new RegistrationResult
-                {
-                    IsSuccess = false,
-                    Errors = new List<string> { "Email Already Exist" }
-                };
-            }
 
             var identityResult = await userManager.CreateAsync(newUser, request.Password);
 
             if (!identityResult.Succeeded)
             {
-                unitOfWork._EmployeeRepository.DeleteAsync(newEmployee);
-                await unitOfWork.SaveChangesAsync();
-
-                return new RegistrationResult
-                {
-                    IsSuccess = false,
-                    Errors = identityResult.Errors.Select(e => e.Description).ToList()
-                };
+                return ApiResponse<int>.FailureResponse(identityResult.Errors.Select(e => e.Description).ToList(), "Registration failed");
             }
 
             await userManager.AddToRoleAsync(newUser, "Employee");
 
-            return new RegistrationResult { IsSuccess = true };
+            return ApiResponse<int>.SuccessResponse(newEmployee.Id, "Employee registered successfully");
         }
     }
 }

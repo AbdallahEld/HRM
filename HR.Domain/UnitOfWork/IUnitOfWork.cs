@@ -12,6 +12,7 @@ namespace HR.Domain.UnitOfWork
         public ILeaveRepository _LeaveRepository { get; }
         public ILeaveTypeRepository _LeaveTypeRepository { get; }
         public ILocationRepository _LocationRepository { get; }
+        public ILocationShiftsRepositroy _LocationShiftsRepositroy { get; }
         public IPayrollRepository _PayrollRepository { get; }
         public IShiftRepository _ShiftRepository { get; }
         public ITrainingRepository _TrainingRepository { get; }

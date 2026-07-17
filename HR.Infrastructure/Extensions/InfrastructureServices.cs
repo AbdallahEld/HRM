@@ -1,4 +1,5 @@
 ﻿using HR.Application.Common.Interfaces;
+using HR.Domain.Data.Entities;
 using HR.Domain.Data.Entities.Identity;
 using HR.Domain.Repository;
 using HR.Domain.UnitOfWork;
@@ -30,6 +31,7 @@ namespace HR.Infrastructure.Extensions
             services.AddScoped<IEmployeeTrainingsRepository, EmployeeTrainingsRepository>();
             services.AddScoped<ILeaveRepository, LeaveRepository>();
             services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
+            services.AddScoped<ILocationShiftsRepositroy, LocationShiftsRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();
             services.AddScoped<IPayrollRepository, PayrollRepository>();
             services.AddScoped<IShiftRepository, ShiftRepository>();

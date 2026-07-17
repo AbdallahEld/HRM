@@ -4,6 +4,7 @@ using HR.Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HR.Infrastructure.Migrations
 {
     [DbContext(typeof(HRDbContext))]
-    partial class HRDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260716205253_composite foreign key")]
+    partial class compositeforeignkey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,6 +71,8 @@ namespace HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ShiftId");
 
                     b.HasIndex("EmployeeId", "Date")
                         .IsUnique();
@@ -713,15 +718,29 @@ namespace HR.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HR.Domain.Data.Entities.LocationShifts", "LocationShift")
+                    b.HasOne("HR.Domain.Data.Entities.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HR.Domain.Data.Entities.Shift", "Shift")
                         .WithMany("Attendances")
+                        .HasForeignKey("ShiftId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HR.Domain.Data.Entities.LocationShifts", null)
+                        .WithMany()
                         .HasForeignKey("LocationId", "ShiftId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Employee");
 
-                    b.Navigation("LocationShift");
+                    b.Navigation("Location");
+
+                    b.Navigation("Shift");
                 });
 
             modelBuilder.Entity("HR.Domain.Data.Entities.Department", b =>
@@ -950,13 +969,10 @@ namespace HR.Infrastructure.Migrations
                     b.Navigation("LocationShifts");
                 });
 
-            modelBuilder.Entity("HR.Domain.Data.Entities.LocationShifts", b =>
-                {
-                    b.Navigation("Attendances");
-                });
-
             modelBuilder.Entity("HR.Domain.Data.Entities.Shift", b =>
                 {
+                    b.Navigation("Attendances");
+
                     b.Navigation("Employees");
 
                     b.Navigation("LocationShifts");

@@ -21,5 +21,6 @@ namespace HR.Domain.Data.Entities
         [InverseProperty("LocationShifts")]
         public Shift Shift { get; set; }
         //-------------------------------------------------------------------------------//
+        public ICollection<Attendance> Attendances { get; set; }
     }
 }

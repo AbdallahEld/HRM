@@ -32,11 +32,11 @@ namespace HR.API.Controllers
 
         [HttpPost("registerEployee")]
         [Authorize(Roles = "HRManager,SystemAdmin")]
-        public async Task<IActionResult> Register(RegisterEmployeeCommand command)
+        public async Task<IActionResult> Register([FromBody] RegisterEmployeeCommand command)
         {
             var result = await _mediator.Send(command);
 
-            if (!result.IsSuccess)
+            if (!result.Success)
             {
                 return BadRequest(new { Errors = result.Errors });
             }

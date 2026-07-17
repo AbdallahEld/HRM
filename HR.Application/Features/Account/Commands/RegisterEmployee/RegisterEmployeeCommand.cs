@@ -1,4 +1,5 @@
 ﻿using HR.Application.Features.Account.DTOs;
+using HR.Application.Shared;
 using HR.Domain.Data.Entities.Enums;
 using MediatR;
 using System;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace HR.Application.Features.Account.Commands.RegisterEmployee
 {
-    public class RegisterEmployeeCommand : IRequest<RegistrationResult>
+    public class RegisterEmployeeCommand : IRequest<ApiResponse<int>>
     {
         public string Email { get; set; }
         public string Password { get; set; }

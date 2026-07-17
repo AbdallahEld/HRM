@@ -22,10 +22,10 @@ namespace HR.Domain.Data.Entities
         //-------------------------------------------------------------------------------//
 
         //---------------------------One To Many Relationship----------------------------//
-        [ForeignKey("Shift")]
         public int ShiftId { get; set; }
-        [InverseProperty("Attendances")]
-        public Shift Shift { get; set; }
+        public int LocationId { get; set; }
+
+        public LocationShifts LocationShift { get; set; }
         //-------------------------------------------------------------------------------//
     }
 }
