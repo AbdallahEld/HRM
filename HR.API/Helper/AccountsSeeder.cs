@@ -56,6 +56,7 @@ namespace HR.API.Helper
                 };
 
                 await userManager.CreateAsync(newHRManager, hrManagerPassword);
+                await userManager.AddToRoleAsync(newHRManager, SystemRoles.HRManager);
             }
         }
 

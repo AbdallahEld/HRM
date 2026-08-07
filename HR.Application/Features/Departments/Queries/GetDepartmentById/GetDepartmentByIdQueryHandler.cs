@@ -1,21 +1,20 @@
 ﻿using HR.Application.Features.Departments.DTOs;
+using HR.Application.Shared;
 using HR.Domain.UnitOfWork;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HR.Application.Features.Departments.Queries.GetDepartmentById
 {
     public class GetDepartmentByIdQueryHandler(
-        IUnitOfWork unitOfWork) : IRequestHandler<GetDepartmentByIdQuery, DepartmentReadDTO>
+        IUnitOfWork unitOfWork) : IRequestHandler<GetDepartmentByIdQuery, ApiResponse<DepartmentReadDTO>>
     {
-        public async Task<DepartmentReadDTO> Handle(GetDepartmentByIdQuery request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<DepartmentReadDTO>> Handle(GetDepartmentByIdQuery request, CancellationToken cancellationToken)
         {
             var department = await unitOfWork._DepartmentRepository.GetByIdAsync(request.Id);
             if (department == null)
             {
-                throw new Exception($"Department with Id {request.Id} not found.");
+                List<string> errors = new List<string> { $"Department with ID {request.Id} not found." };
+                return ApiResponse<DepartmentReadDTO>.FailureResponse(errors);
             }
 
             var departmentReadDTO = new DepartmentReadDTO
@@ -28,7 +27,7 @@ namespace HR.Application.Features.Departments.Queries.GetDepartmentById
                 ManagerId = department.ManagerId
             };
 
-            return departmentReadDTO;
+            return ApiResponse<DepartmentReadDTO>.SuccessResponse(departmentReadDTO, "Department retrieved successfully");
         }
     }
 }

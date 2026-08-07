@@ -1,12 +1,10 @@
 ﻿using HR.Application.Features.Departments.DTOs;
+using HR.Application.Shared;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HR.Application.Features.Departments.Queries.GetAllDepartments
 {
-    public class GetAllDepartmentsQuery : IRequest<IEnumerable<DepartmentReadDTO>>
+    public class GetAllDepartmentsQuery : IRequest<ApiResponse<IEnumerable<DepartmentReadDTO>>>
     {
     }
 }

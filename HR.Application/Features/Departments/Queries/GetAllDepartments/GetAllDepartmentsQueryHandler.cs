@@ -1,4 +1,5 @@
 ﻿using HR.Application.Features.Departments.DTOs;
+using HR.Application.Shared;
 using HR.Domain.Repository;
 using HR.Domain.UnitOfWork;
 using MediatR;
@@ -9,9 +10,9 @@ using System.Text;
 namespace HR.Application.Features.Departments.Queries.GetAllDepartments
 {
     public class GetAllDepartmentsQueryHandler (
-        IUnitOfWork unitOfWork) : IRequestHandler<GetAllDepartmentsQuery, IEnumerable<DepartmentReadDTO>>
+        IUnitOfWork unitOfWork) : IRequestHandler<GetAllDepartmentsQuery, ApiResponse<IEnumerable<DepartmentReadDTO>>>
     {
-        public async Task<IEnumerable<DepartmentReadDTO>> Handle(GetAllDepartmentsQuery request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<IEnumerable<DepartmentReadDTO>>> Handle(GetAllDepartmentsQuery request, CancellationToken cancellationToken)
         {
             var departments = await unitOfWork._DepartmentRepository.GetAllAsync();
 
@@ -25,7 +26,7 @@ namespace HR.Application.Features.Departments.Queries.GetAllDepartments
                 ManagerId = d.ManagerId
             });
 
-            return departmentReadDTOs;
+            return ApiResponse<IEnumerable<DepartmentReadDTO>>.SuccessResponse(departmentReadDTOs, "Departments retrieved successfully");
         }
     }
 }

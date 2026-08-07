@@ -1,12 +1,10 @@
 ﻿using HR.Application.Features.Departments.DTOs;
+using HR.Application.Shared;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HR.Application.Features.Departments.Queries.GetDepartmentById
 {
-    public class GetDepartmentByIdQuery (int id) : IRequest<DepartmentReadDTO>
+    public class GetDepartmentByIdQuery(int id) : IRequest<ApiResponse<DepartmentReadDTO>>
     {
         public int Id { get; } = id;
     }
