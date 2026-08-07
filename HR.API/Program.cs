@@ -49,8 +49,9 @@ namespace HR.API
                 var roleManager = services.GetRequiredService<RoleManager<Role>>();
                 var userManager = services.GetRequiredService<UserManager<User>>();
 
-                await AdminSeeder.SeedRolesAsync(roleManager);
-                await AdminSeeder.SeedAdminAsync(roleManager, userManager);
+                await AccountsSeeder.SeedRolesAsync(roleManager);
+                await AccountsSeeder.SeedAdminAsync(roleManager, userManager);
+                await AccountsSeeder.SeedHRManagerAsync(roleManager, userManager);
             }
 
             if (app.Environment.IsDevelopment())

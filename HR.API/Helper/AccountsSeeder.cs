@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace HR.API.Helper
 {
-    public static class AdminSeeder
+    public static class AccountsSeeder
     {
         public static async Task SeedAdminAsync(RoleManager<Role> roleManager, UserManager<User> userManager)
         {
@@ -16,7 +16,7 @@ namespace HR.API.Helper
                 await roleManager.CreateAsync(role);
             }
 
-            var adminEmail = "abdallaheldesoky301@gmail.com";
+            var adminEmail = "admin@HRM.com";
             var admin = await userManager.FindByEmailAsync(adminEmail);
 
             if (admin is null)
@@ -24,11 +24,38 @@ namespace HR.API.Helper
                 var adminPassword = "P@ssw0rd";
                 var newAdmin = new User
                 {
-                    UserName = "Remando",
+                    UserName = "AdminUser",
                     Email = adminEmail,
                 };
                 await userManager.CreateAsync(newAdmin, adminPassword);
                 await userManager.AddToRoleAsync(newAdmin, SystemRoles.SystemAdmin);
+            }
+        }
+
+        public static async Task SeedHRManagerAsync(RoleManager<Role> roleManager, UserManager<User> userManager)
+        {
+            if (!await roleManager.RoleExistsAsync(SystemRoles.HRManager))
+            {
+                var role = new Role
+                {
+                    Name = SystemRoles.HRManager
+                };
+                await roleManager.CreateAsync(role);
+            }
+
+            var hrManagerEmail = "hrmanager@HRM.com";
+            var hrManager = await userManager.FindByEmailAsync(hrManagerEmail);
+
+            if (hrManager is null)
+            {
+                var hrManagerPassword = "P@ssw0rd";
+                var newHRManager = new User
+                {
+                    UserName = "HRManagerUser",
+                    Email = hrManagerEmail,
+                };
+
+                await userManager.CreateAsync(newHRManager, hrManagerPassword);
             }
         }
 
