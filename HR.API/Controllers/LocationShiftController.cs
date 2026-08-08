@@ -1,4 +1,6 @@
 ﻿using HR.Application.Features.LocationShifts.Commands.AssignShiftToLocation;
+using HR.Application.Features.LocationShifts.Queries.GetLocationAllShifts;
+using HR.Application.Features.Shift.Querries.GetAllShifts;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +13,16 @@ namespace HR.API.Controllers
     public class LocationShiftController (
         IMediator mediator) : ControllerBase
     {
+        [HttpGet("{locationId:int}")]
+        public async Task<IActionResult> GetLocationShifts([FromRoute] int locationId)
+        {
+            var response = await mediator.Send(new GetLocationAllShiftsQuery(locationId));
+            if (!response.Success)
+            {
+                return NotFound(response);
+            }
+            return Ok(response);
+        }
         [HttpPost]
         [Authorize(Roles = "HRManager,SystemAdmin")]
         public async Task<IActionResult> CreateLocationShift([FromBody] AssignShiftToLocationCommand command)
