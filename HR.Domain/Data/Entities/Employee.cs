@@ -13,6 +13,7 @@ namespace HR.Domain.Data.Entities
         public string NationalId { get; set; }
         public EmploymentType EmploymentType { get; set; }
         public EmploymentStatus EmploymentStatus { get; set; }
+        public bool CanWorkRemotely { get; set; } = false;
         public DateTime? ProbationEndDate { get; set; }
         public decimal? BaseSalary { get; set; }
         public decimal? HourlyRate { get; set; }

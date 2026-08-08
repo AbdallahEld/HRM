@@ -23,6 +23,7 @@ namespace HR.Application.Features.Account.Commands.RegisterEmployee
 
         public EmploymentType EmploymentType { get; set; }
         public EmploymentStatus EmploymentStatus { get; set; }
+        public bool CanWorkRemotely { get; set; }
         public string Position { get; set; }
         public DateOnly HireDate { get; set; }
         public DateTime? ProbationEndDate { get; set; }
