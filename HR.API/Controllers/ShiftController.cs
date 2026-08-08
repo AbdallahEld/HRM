@@ -6,6 +6,7 @@ using HR.Application.Features.Shift.Querries.GetAllShifts;
 using HR.Application.Features.Shift.Querries.GetShiftById;
 using HR.Application.Shared;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HR.API.Controllers
@@ -30,6 +31,7 @@ namespace HR.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "HRManager,SystemAdmin")]
         public async Task<IActionResult> Create([FromBody] CreateShiftCommand command)
         {
             var response = await mediator.Send(command);
@@ -42,6 +44,7 @@ namespace HR.API.Controllers
         }
 
         [HttpPatch("{id:int}")]
+        [Authorize(Roles = "HRManager,SystemAdmin")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateShiftCommand command)
         {
             command.Id = id;
@@ -56,6 +59,7 @@ namespace HR.API.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = "HRManager,SystemAdmin")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             await mediator.Send(new DeleteShiftCommand(id));
