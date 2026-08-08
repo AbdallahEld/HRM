@@ -6,8 +6,8 @@ namespace HR.Domain.Data.Entities
     public class Attendance : BaseEntity
     {
         public DateOnly Date { get; set; }
-        public DateTime? TimeIn { get; set; }
-        public DateTime? TimeOut { get; set; }
+        public TimeOnly? TimeIn { get; set; }
+        public TimeOnly? TimeOut { get; set; }
         public AttendanceStatus Status { get; set; }
         public AttendanceSource Source { get; set; }
         public int LateMinutes { get; set; } = 0;

@@ -27,7 +27,8 @@ namespace HR.Infrastructure.Identity.JWT
             {
                 new Claim (ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.Email, user.Email)
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim("EmployeeId", user.EmployeeId.ToString())
             };
 
             foreach (var role in roles)
