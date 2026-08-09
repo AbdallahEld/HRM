@@ -1,18 +1,17 @@
-﻿using HR.Application.Features.Attendance.Commands;
+﻿using HR.Application.Features.Attendance.Commands.ClockIn;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HR.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AttendanceController (
+    public class AttendanceController(
         IMediator mediator) : ControllerBase
     {
         [HttpPost("clock-in")]
-        [Authorize(Roles = "Employee")] // لازم يكون عامل لوجين
+        [Authorize(Roles = "Employee")]
         public async Task<IActionResult> ClockIn([FromBody] ClockInCommand command)
         {
             var employeeIdClaim = User.FindFirst("EmployeeId")?.Value;
@@ -25,7 +24,7 @@ namespace HR.API.Controllers
 
             var response = await mediator.Send(command);
 
-            if (!response.Success) 
+            if (!response.Success)
             {
                 return BadRequest(response);
             }

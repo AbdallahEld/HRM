@@ -4,7 +4,6 @@ using HR.API.Helper;
 using HR.Application.Extensions;
 using HR.Domain.Data.Entities.Identity;
 using HR.Infrastructure.Extensions;
-using HR.Infrastructure.Persistance;
 using Microsoft.AspNetCore.Identity;
 using Scalar.AspNetCore;
 using System.Text.Json.Serialization;
@@ -32,7 +31,7 @@ namespace HR.API
                     options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                 });
             builder.Services.AddOpenApi();
-            
+
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
             builder.Services.AddMicrosoftIdentity();

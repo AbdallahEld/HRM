@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using HR.Application.Behaviors;
+using HR.Application.Features.Attendance.Services;
 using HR.Application.Features.Departments.Services;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +21,7 @@ namespace HR.Application.Extensions
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddScoped<IDepartmentCapacityChecker, DepartmentCapacityChecker>();
+            services.AddScoped<IClockService, ClockService>();
         }
     }
 }

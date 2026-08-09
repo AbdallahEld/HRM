@@ -2,9 +2,9 @@
 using MediatR;
 using System.Text.Json.Serialization;
 
-namespace HR.Application.Features.Attendance.Commands
+namespace HR.Application.Features.Attendance.Commands.ClockOut
 {
-    public class ClockInCommand : IRequest<ApiResponse<int>>
+    public class ClockOutCommand : IRequest<ApiResponse<int>>
     {
         public int LocationId { get; set; }
         public decimal Lat { get; set; }
