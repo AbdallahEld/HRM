@@ -12,6 +12,12 @@ namespace HR.Application.Features.Attendance.Commands.ClockIn
     {
         public async Task<ApiResponse<int>> Handle(ClockInCommand request, CancellationToken cancellationToken)
         {
+            var egyptTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Egypt Standard Time");
+            var localTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, egyptTimeZone);
+
+            var today = DateOnly.FromDateTime(localTime);
+            var actualTimeIn = TimeOnly.FromDateTime(localTime);
+
             var employee = await unitOfWork._EmployeeRepository.GetByIdAsync(request.EmployeeId);
             if (employee == null || employee.DefaultShiftId == null)
             {
@@ -48,12 +54,12 @@ namespace HR.Application.Features.Attendance.Commands.ClockIn
                 }
             }
 
-            var today = DateOnly.FromDateTime(DateTime.UtcNow);
             var existingAttendance = await unitOfWork._AttendanceRepository.GetAsync(a => a.EmployeeId == request.EmployeeId && a.Date == today);
             if (existingAttendance != null)
             {
                 return ApiResponse<int>.FailureResponse(new List<string> { "You have already clocked in today." }, "Clock-In failed");
             }
+
 
             var newAttendance = new Domain.Data.Entities.Attendance
             {
@@ -61,10 +67,29 @@ namespace HR.Application.Features.Attendance.Commands.ClockIn
                 LocationId = request.LocationId,
                 ShiftId = employee.DefaultShiftId,
                 Date = today,
-                TimeIn = TimeOnly.FromDateTime(DateTime.UtcNow),
+                TimeIn = actualTimeIn,
                 Status = AttendanceStatus.Present,
                 Source = AttendanceSource.App 
             };
+
+            var shift = await unitOfWork._ShiftRepository.GetByIdAsync(employee.DefaultShiftId);
+
+            if (!shift.IsFlexible)
+            {
+                if (shift.StartTime.HasValue && actualTimeIn > shift.StartTime.Value)
+                {
+                    var lateSpan = actualTimeIn - shift.StartTime.Value;
+
+                    if (lateSpan.TotalMinutes > shift.GracePeriodMinutes)
+                    {
+                        newAttendance.LateMinutes = (int)lateSpan.TotalMinutes;
+                    }
+                    else
+                    {
+                        newAttendance.LateMinutes = 0;
+                    }
+                }
+            }
 
             await unitOfWork._AttendanceRepository.AddAsync(newAttendance);
             await unitOfWork.SaveChangesAsync();
