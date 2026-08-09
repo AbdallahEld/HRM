@@ -18,6 +18,7 @@ namespace HR.Infrastructure.UnitOfWork
         public IPayrollRepository _PayrollRepository { get; }
         public IShiftRepository _ShiftRepository { get; }
         public ITrainingRepository _TrainingRepository { get; }
+        public IEmployeeLeaveBalanceRepository _EmployeeLeaveBalanceRepository { get; }
 
         private readonly HRDbContext _dbContext;
         public UnitOfWork(
@@ -33,6 +34,7 @@ namespace HR.Infrastructure.UnitOfWork
             IPayrollRepository payrollRepository,
             IShiftRepository shiftRepository,
             ITrainingRepository trainingRepository,
+            IEmployeeLeaveBalanceRepository employeeLeaveBalanceRepository,
             HRDbContext dbContext)
         {
             _AttendanceRepository = attendanceRepository;
@@ -47,6 +49,7 @@ namespace HR.Infrastructure.UnitOfWork
             _PayrollRepository = payrollRepository;
             _ShiftRepository = shiftRepository;
             _TrainingRepository = trainingRepository;
+            _EmployeeLeaveBalanceRepository = employeeLeaveBalanceRepository;
             _dbContext = dbContext;
         }
         public async Task SaveChangesAsync()

@@ -8,6 +8,8 @@ namespace HR.Domain.Data.Entities
         public DateOnly StartDate { get; set; }
         public DateOnly EndDate { get; set; }
         public LeaveStatus Status { get; set; }
+        public int TotalDays { get; set; }
+        public string Reason { get; set; }
 
         //---------------------------One To Many Relationship----------------------------//
         public int ApproverId { get; set; }

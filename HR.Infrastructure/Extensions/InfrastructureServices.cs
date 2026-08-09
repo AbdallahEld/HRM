@@ -36,6 +36,7 @@ namespace HR.Infrastructure.Extensions
             services.AddScoped<IPayrollRepository, PayrollRepository>();
             services.AddScoped<IShiftRepository, ShiftRepository>();
             services.AddScoped<ITrainingRepository, TrainingRepository>();
+            services.AddScoped<IEmployeeLeaveBalanceRepository, EmployeeLeaveBalanceRepository>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
         }
