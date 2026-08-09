@@ -5,17 +5,21 @@ using MediatR;
 
 namespace HR.Application.Features.Attendance.Commands.ClockOut
 {
-    public class ClockOutCommandHandler (
+    public class ClockOutCommandHandler(
         IUnitOfWork unitOfWork,
         IClockService clockService) : IRequestHandler<ClockOutCommand, ApiResponse<int>>
     {
         public async Task<ApiResponse<int>> Handle(ClockOutCommand request, CancellationToken cancellationToken)
         {
-            var today = DateOnly.FromDateTime(DateTime.UtcNow);
+            var egyptTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Egypt Standard Time");
+            var localTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, egyptTimeZone);
+            var today = DateOnly.FromDateTime(localTime);
+            var actualTimeOut = TimeOnly.FromDateTime(localTime);
 
-            var activeAttendance = await unitOfWork._AttendanceRepository.GetAsync(a => a.EmployeeId == request.EmployeeId 
-            && today == a.Date
-            && a.TimeOut == null);
+            var activeAttendance = await unitOfWork._AttendanceRepository.GetAsync(a =>
+                a.EmployeeId == request.EmployeeId
+                && a.Date == today
+                && a.TimeOut == null);
 
             if (activeAttendance == null)
             {
@@ -33,8 +37,8 @@ namespace HR.Application.Features.Attendance.Commands.ClockOut
             if (!location.IsRemote)
             {
                 var distanceInMeters = clockService.CalculateDistance(request.Lat, request.Long, location.Lat, location.Long);
-
                 double maxAllowedDistance = 100;
+
                 if (distanceInMeters > maxAllowedDistance)
                 {
                     return ApiResponse<int>.FailureResponse(new List<string> { $"You are too far from the workplace. Distance: {Math.Round(distanceInMeters)}m." }, "Clock-Out failed");
@@ -47,23 +51,45 @@ namespace HR.Application.Features.Attendance.Commands.ClockOut
                 return ApiResponse<int>.FailureResponse(new List<string> { "Shift data not found." }, "Clock-Out failed");
             }
 
-            var actualTimeOut = TimeOnly.FromDateTime(DateTime.UtcNow);
             activeAttendance.TimeOut = actualTimeOut;
 
-            if(shift.EndTime.HasValue)
+            if (shift.IsFlexible)
             {
-                if (actualTimeOut < shift.EndTime.Value)
+                if (activeAttendance.TimeIn.HasValue)
                 {
-                    var earlySpan = shift.EndTime.Value - actualTimeOut;
-                    activeAttendance.EarlyDepartureMinutes = (int)earlySpan.TotalMinutes;
-                }
-                else if (actualTimeOut > shift.EndTime.Value)
-                {
-                    var overtimeSpan = actualTimeOut - shift.EndTime.Value;
+                    var workedSpan = actualTimeOut - activeAttendance.TimeIn.Value;
+                    var requiredMinutes = (double)shift.RequiredHours * 60;
 
-                    if (overtimeSpan.TotalMinutes > shift.GracePeriodMinutes)
+                    if (workedSpan.TotalMinutes < requiredMinutes)
                     {
-                        activeAttendance.OverTimeHours = (int)overtimeSpan.TotalHours;
+                        activeAttendance.EarlyDepartureMinutes = (int)(requiredMinutes - workedSpan.TotalMinutes);
+                    }
+                    else if (workedSpan.TotalMinutes > requiredMinutes)
+                    {
+                        var extraMinutes = workedSpan.TotalMinutes - requiredMinutes;
+                        if (extraMinutes > shift.GracePeriodMinutes)
+                        {
+                            activeAttendance.OverTimeHours = (int)(extraMinutes / 60);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (shift.EndTime.HasValue)
+                {
+                    if (actualTimeOut < shift.EndTime.Value)
+                    {
+                        var earlySpan = shift.EndTime.Value - actualTimeOut;
+                        activeAttendance.EarlyDepartureMinutes = (int)earlySpan.TotalMinutes;
+                    }
+                    else if (actualTimeOut > shift.EndTime.Value)
+                    {
+                        var overtimeSpan = actualTimeOut - shift.EndTime.Value;
+                        if (overtimeSpan.TotalMinutes > shift.GracePeriodMinutes)
+                        {
+                            activeAttendance.OverTimeHours = (int)overtimeSpan.TotalHours;
+                        }
                     }
                 }
             }
