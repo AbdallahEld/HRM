@@ -3,4 +3,5 @@
   <Project Path="HR.Application/HR.Application.csproj" />
   <Project Path="HR.Domain/HR.Domain.csproj" />
   <Project Path="HR.Infrastructure/HR.Infrastructure.csproj" />
+  <Project Path="HR.Tests/HR.Tests.csproj" Id="8c8e768b-a23f-4429-8c5f-ef70bf46fbeb" />
 </Solution>
