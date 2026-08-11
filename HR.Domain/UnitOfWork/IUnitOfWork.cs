@@ -17,6 +17,6 @@ namespace HR.Domain.UnitOfWork
         public IShiftRepository _ShiftRepository { get; }
         public ITrainingRepository _TrainingRepository { get; }
         public IEmployeeLeaveBalanceRepository _EmployeeLeaveBalanceRepository { get; }
-        Task SaveChangesAsync();
+        Task<int> SaveChangesAsync();
     }
 }

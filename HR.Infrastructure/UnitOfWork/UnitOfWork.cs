@@ -1,6 +1,8 @@
-﻿using HR.Domain.Repository;
+﻿using HR.Domain.Data.Entities;
+using HR.Domain.Repository;
 using HR.Domain.UnitOfWork;
 using HR.Infrastructure.Persistance;
+using MediatR;
 
 namespace HR.Infrastructure.UnitOfWork
 {
@@ -21,6 +23,7 @@ namespace HR.Infrastructure.UnitOfWork
         public IEmployeeLeaveBalanceRepository _EmployeeLeaveBalanceRepository { get; }
 
         private readonly HRDbContext _dbContext;
+        private readonly IMediator _mediator;
         public UnitOfWork(
             IAttendanceRepository attendanceRepository,
             IDepartmentRepository departmentRepository,
@@ -35,6 +38,7 @@ namespace HR.Infrastructure.UnitOfWork
             IShiftRepository shiftRepository,
             ITrainingRepository trainingRepository,
             IEmployeeLeaveBalanceRepository employeeLeaveBalanceRepository,
+            IMediator mediator,
             HRDbContext dbContext)
         {
             _AttendanceRepository = attendanceRepository;
@@ -51,10 +55,28 @@ namespace HR.Infrastructure.UnitOfWork
             _TrainingRepository = trainingRepository;
             _EmployeeLeaveBalanceRepository = employeeLeaveBalanceRepository;
             _dbContext = dbContext;
+            _mediator = mediator;
         }
-        public async Task SaveChangesAsync()
+        public async Task<int> SaveChangesAsync()
         {
-            await _dbContext.SaveChangesAsync();
+            var entitiesWithEvents = _dbContext.ChangeTracker.Entries<BaseEntity>()
+                                                             .Select(e => e.Entity)
+                                                             .Where(e => e.DomainEvents != null && e.DomainEvents.Any())
+                                                             .ToList();
+
+            var domainEvents = entitiesWithEvents.SelectMany(e => e.DomainEvents)
+                                                 .ToList();
+
+            entitiesWithEvents.ForEach(e => e.ClearDomainEvents());
+
+            var result = await _dbContext.SaveChangesAsync();
+
+            foreach(var domianEvent in domainEvents)
+            {
+                await _mediator.Publish(domianEvent);
+            }
+
+            return result;
         }
     }
 }

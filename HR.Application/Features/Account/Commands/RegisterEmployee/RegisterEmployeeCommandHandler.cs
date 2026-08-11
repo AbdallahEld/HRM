@@ -1,5 +1,6 @@
 ﻿using HR.Application.Shared;
 using HR.Domain.Data.Entities.Identity;
+using HR.Domain.Events.Employee;
 using HR.Domain.UnitOfWork;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -8,7 +9,8 @@ namespace HR.Application.Features.Account.Commands.RegisterEmployee
 {
     public class RegisterEmployeeCommandHandler(
         UserManager<User> userManager,
-        IUnitOfWork unitOfWork) : IRequestHandler<RegisterEmployeeCommand, ApiResponse<int>>
+        IUnitOfWork unitOfWork,
+        IMediator mediator) : IRequestHandler<RegisterEmployeeCommand, ApiResponse<int>>
     {
         public async Task<ApiResponse<int>> Handle(RegisterEmployeeCommand request, CancellationToken cancellationToken)
         {
@@ -62,6 +64,7 @@ namespace HR.Application.Features.Account.Commands.RegisterEmployee
 
             await userManager.AddToRoleAsync(newUser, "Employee");
 
+            await mediator.Publish(new EmployeeRegistered(newEmployee), cancellationToken);
             return ApiResponse<int>.SuccessResponse(newEmployee.Id, "Employee registered successfully");
         }
     }
