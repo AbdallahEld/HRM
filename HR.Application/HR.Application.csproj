@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Attendance\Handlers\" />
     <Folder Include="Features\Employee\Commands\" />
   </ItemGroup>
 

@@ -1,12 +1,9 @@
 ﻿using HR.Domain.UnitOfWork;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HR.Application.Features.Departments.Commands.DeleteDepartment
 {
-    public class DeleteDepartmentCommandHandler (
+    public class DeleteDepartmentCommandHandler(
         IUnitOfWork unitOfWork) : IRequestHandler<DeleteDepartmentCommand>
     {
         public async Task Handle(DeleteDepartmentCommand request, CancellationToken cancellationToken)
