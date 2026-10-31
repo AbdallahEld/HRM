@@ -1,5 +1,6 @@
 ﻿using HR.Application.Features.Leaves.Services.ValidateLeaveBalance;
 using HR.Application.Features.Leaves.Services.ValidateNoOverlap;
+using HR.Application.Features.Leaves.Services.ValidatePastDate;
 using HR.Application.Shared;
 using HR.Domain.Data.Entities;
 using HR.Domain.Data.Entities.Enums;
@@ -11,7 +12,8 @@ namespace HR.Application.Features.Leaves.Commands.SubmitLeaveRequest
     public class SubmitLeaveRequestCommandHandler (
         IUnitOfWork unitOfWork,
         INoOverlapChecker noOverlapChecker,
-        ILeaveBalanceChecker leaveBalanceChecker) : IRequestHandler<SubmitLeaveRequestCommand, ApiResponse<string>>
+        ILeaveBalanceChecker leaveBalanceChecker,
+        IPastDateChecker pastDateChecker) : IRequestHandler<SubmitLeaveRequestCommand, ApiResponse<string>>
     {
         public async Task<ApiResponse<string>> Handle(SubmitLeaveRequestCommand request, CancellationToken cancellationToken)
         {
@@ -27,7 +29,6 @@ namespace HR.Application.Features.Leaves.Commands.SubmitLeaveRequest
 
             var result = noOverlapChecker
                 .ValidateNoOverlap(request.StartDate , request.EndDate , existingLeaves);
-
             if (!result.Success)
             {
                 return ApiResponse<string>.FailureResponse(result.Errors);
@@ -45,10 +46,15 @@ namespace HR.Application.Features.Leaves.Commands.SubmitLeaveRequest
 
             var result2 = await leaveBalanceChecker
                 .ValidateLeaveBalanceAsync(request.LeaveTypeId, requestedDays,request.EmployeeId);
-
             if (!result2.Success)
             {
                 return ApiResponse<string>.FailureResponse(result2.Errors);
+            }
+
+            var result3 = pastDateChecker.ValidatePastDate(request.StartDate, leaveType.Name);
+            if (!result3.Success)
+            {
+                return ApiResponse<string>.FailureResponse(result3.Errors);
             }
 
             var leaveRequest = new Leave

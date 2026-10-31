@@ -6,13 +6,6 @@ namespace HR.Application.Features.Leaves.Services.ValidateNoOverlap
 {
     public class NoOverlapChecker : INoOverlapChecker
     {
-        private readonly IUnitOfWork _unitOfWork;
-
-        public NoOverlapChecker(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
-
         public ApiResponse<string> ValidateNoOverlap(DateOnly startDate, DateOnly endDate, IReadOnlyList<Leave> existingLeaves)
         {
             foreach (var leave in existingLeaves)
