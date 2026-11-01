@@ -12,7 +12,7 @@ namespace HR.Domain.Data.Entities
         public string Reason { get; set; }
 
         //---------------------------One To Many Relationship----------------------------//
-        public int ApproverId { get; set; }
+        public int? ApproverId { get; set; }
         public Employee Approver { get; set; }
         //-------------------------------------------------------------------------------//
         public DateOnly? ApprovedAt { get; set; }

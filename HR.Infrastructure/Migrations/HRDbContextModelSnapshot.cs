@@ -422,7 +422,7 @@ namespace HR.Infrastructure.Migrations
                     b.Property<DateOnly?>("ApprovedAt")
                         .HasColumnType("date");
 
-                    b.Property<int>("ApproverId")
+                    b.Property<int?>("ApproverId")
                         .HasColumnType("int");
 
                     b.Property<int>("EmployeeId")
@@ -875,8 +875,7 @@ namespace HR.Infrastructure.Migrations
                     b.HasOne("HR.Domain.Data.Entities.Employee", "Approver")
                         .WithMany("ApprovedLeaves")
                         .HasForeignKey("ApproverId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("HR.Domain.Data.Entities.Employee", "Employee")
                         .WithMany("Leaves")
