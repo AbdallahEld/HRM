@@ -68,6 +68,9 @@ namespace HR.Application.Features.Leaves.Commands.SubmitLeaveRequest
                 TotalDays = requestedDays
             };
 
+            await unitOfWork._LeaveRepository.AddAsync(leaveRequest);
+            await unitOfWork.SaveChangesAsync();
+
             return ApiResponse<string>.SuccessResponse("Leave request submitted successfully.");
         }
     }

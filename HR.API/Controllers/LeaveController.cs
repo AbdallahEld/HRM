@@ -12,7 +12,7 @@ namespace HR.API.Controllers
     {
 
 
-        [HttpPost]
+        [HttpPost("SubmitLeaveRequest")]
         [Authorize(Roles = "Employee")]
         public async Task<IActionResult> SubmitLeaveRequest([FromBody] SubmitLeaveRequestCommand command)
         {
