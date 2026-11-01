@@ -62,7 +62,7 @@ namespace HR.API.Helper
 
         public static async Task SeedRolesAsync (RoleManager<Role> roleManager)
         {
-            var roles = new[] { SystemRoles.SystemAdmin, SystemRoles.HRManager, SystemRoles.Employee };
+            var roles = new[] { SystemRoles.SystemAdmin, SystemRoles.HRManager, SystemRoles.Employee , SystemRoles.DepartmentHead };
             foreach (var roleName in roles)
             {
                 if (!await roleManager.RoleExistsAsync(roleName))

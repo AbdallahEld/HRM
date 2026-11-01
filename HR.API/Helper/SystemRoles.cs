@@ -5,5 +5,6 @@
         public const string SystemAdmin = "SystemAdmin";
         public const string HRManager = "HRManager";
         public const string Employee = "Employee";
+        public const string DepartmentHead = "DepartmentHead";
     }
 }

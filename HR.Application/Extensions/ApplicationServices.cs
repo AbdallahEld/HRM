@@ -2,11 +2,11 @@
 using HR.Application.Behaviors;
 using HR.Application.Features.Attendance.Services;
 using HR.Application.Features.Departments.Services;
+using HR.Application.Features.Leaves.Services.ValidateLeaveBalance;
+using HR.Application.Features.Leaves.Services.ValidateNoOverlap;
+using HR.Application.Features.Leaves.Services.ValidatePastDate;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HR.Application.Extensions
 {
@@ -21,6 +21,9 @@ namespace HR.Application.Extensions
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddScoped<IDepartmentCapacityChecker, DepartmentCapacityChecker>();
+            services.AddScoped<INoOverlapChecker, NoOverlapChecker>();
+            services.AddScoped<ILeaveBalanceChecker, LeaveBalanceChecker>();
+            services.AddScoped<IPastDateChecker, PastDateChecker>();
             services.AddScoped<IClockService, ClockService>();
         }
     }
