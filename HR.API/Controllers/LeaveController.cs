@@ -1,5 +1,6 @@
 ﻿using HR.Application.Features.Leave.Commands.SubmitLeaveRequest;
 using HR.Application.Features.Leave.Queries.GetDepartmentLeaveRequests;
+using HR.Application.Features.Leaves.Queries.GetAllLeaveRequests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,18 @@ namespace HR.API.Controllers
     public class LeaveController (
         IMediator mediator): ControllerBase
     {
+        [HttpGet("getAllLeaves")]
+        [Authorize(Roles = "HRManager,SystemAdmin")]
+        public async Task<IActionResult> GetAllLeaveRequests([FromQuery] GetAllLeaveRequestsQuery query)
+        {
+            var response = await mediator.Send(query);
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
         [HttpGet("getDepartmentEmployeeLeaves")]
         [Authorize(Roles = "DepartmentHead")]
         public async Task<IActionResult> GetDepartmentEmployeeLeaveRequests([FromQuery] GetDepartmentLeaveRequestsQuery query)
