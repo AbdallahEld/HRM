@@ -1,7 +1,7 @@
 ﻿using HR.Application.Shared;
 using HR.Domain.UnitOfWork;
 
-namespace HR.Application.Features.Leaves.Services.ValidateLeaveBalance
+namespace HR.Application.Features.Leave.Services.ValidateLeaveBalance
 {
     public class LeaveBalanceChecker : ILeaveBalanceChecker
     {

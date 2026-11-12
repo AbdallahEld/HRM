@@ -2,7 +2,7 @@
 using MediatR;
 using System.Text.Json.Serialization;
 
-namespace HR.Application.Features.Leaves.Commands.SubmitLeaveRequest
+namespace HR.Application.Features.Leave.Commands.SubmitLeaveRequest
 {
     public class SubmitLeaveRequestCommand : IRequest<ApiResponse<string>>
     {

@@ -1,6 +1,6 @@
 ﻿using HR.Application.Shared;
 
-namespace HR.Application.Features.Leaves.Services.ValidateLeaveBalance
+namespace HR.Application.Features.Leave.Services.ValidateLeaveBalance
 {
     public interface ILeaveBalanceChecker
     {

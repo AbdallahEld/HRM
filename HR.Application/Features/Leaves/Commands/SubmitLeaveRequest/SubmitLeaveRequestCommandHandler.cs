@@ -1,13 +1,13 @@
-﻿using HR.Application.Features.Leaves.Services.ValidateLeaveBalance;
-using HR.Application.Features.Leaves.Services.ValidateNoOverlap;
-using HR.Application.Features.Leaves.Services.ValidatePastDate;
+﻿using HR.Application.Features.Leave.Services.ValidateLeaveBalance;
+using HR.Application.Features.Leave.Services.ValidateNoOverlap;
+using HR.Application.Features.Leave.Services.ValidatePastDate;
 using HR.Application.Shared;
 using HR.Domain.Data.Entities;
 using HR.Domain.Data.Entities.Enums;
 using HR.Domain.UnitOfWork;
 using MediatR;
 
-namespace HR.Application.Features.Leaves.Commands.SubmitLeaveRequest
+namespace HR.Application.Features.Leave.Commands.SubmitLeaveRequest
 {
     public class SubmitLeaveRequestCommandHandler (
         IUnitOfWork unitOfWork,
@@ -57,7 +57,7 @@ namespace HR.Application.Features.Leaves.Commands.SubmitLeaveRequest
                 return ApiResponse<string>.FailureResponse(result3.Errors);
             }
 
-            var leaveRequest = new Leave
+            var leaveRequest = new Domain.Data.Entities.Leave
             {
                 EmployeeId = request.EmployeeId,
                 LeaveTypeId = request.LeaveTypeId,

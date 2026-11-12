@@ -2,9 +2,9 @@
 using HR.Application.Behaviors;
 using HR.Application.Features.Attendance.Services;
 using HR.Application.Features.Departments.Services;
-using HR.Application.Features.Leaves.Services.ValidateLeaveBalance;
-using HR.Application.Features.Leaves.Services.ValidateNoOverlap;
-using HR.Application.Features.Leaves.Services.ValidatePastDate;
+using HR.Application.Features.Leave.Services.ValidateLeaveBalance;
+using HR.Application.Features.Leave.Services.ValidateNoOverlap;
+using HR.Application.Features.Leave.Services.ValidatePastDate;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 

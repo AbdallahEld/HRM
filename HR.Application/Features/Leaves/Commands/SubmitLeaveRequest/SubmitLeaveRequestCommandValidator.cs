@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace HR.Application.Features.Leaves.Commands.SubmitLeaveRequest
+namespace HR.Application.Features.Leave.Commands.SubmitLeaveRequest
 {
     public class SubmitLeaveRequestCommandValidator : AbstractValidator<SubmitLeaveRequestCommand>
     {

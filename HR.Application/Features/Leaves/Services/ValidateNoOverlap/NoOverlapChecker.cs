@@ -2,11 +2,11 @@
 using HR.Domain.Data.Entities;
 using HR.Domain.UnitOfWork;
 
-namespace HR.Application.Features.Leaves.Services.ValidateNoOverlap
+namespace HR.Application.Features.Leave.Services.ValidateNoOverlap
 {
     public class NoOverlapChecker : INoOverlapChecker
     {
-        public ApiResponse<string> ValidateNoOverlap(DateOnly startDate, DateOnly endDate, IReadOnlyList<Leave> existingLeaves)
+        public ApiResponse<string> ValidateNoOverlap(DateOnly startDate, DateOnly endDate, IReadOnlyList<Domain.Data.Entities.Leave> existingLeaves)
         {
             foreach (var leave in existingLeaves)
             {
