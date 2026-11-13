@@ -16,7 +16,7 @@ namespace HR.Application.Features.Leave.Queries.GetDepartmentLeaveRequests
             var departmentId = employee.DepartmentId;
 
             var leaveRequests = await unitOfWork._LeaveRepository.GetAllAsync(
-                filter: l => l.Employee.DepartmentId == departmentId && l.ApproverId == null,
+                filter: l => l.Employee.DepartmentId == departmentId,
                 sortBy: null,
                 isDescending: false,
                 trackChanges: false,
