@@ -1,9 +1,4 @@
-﻿using HR.Domain.Data.Entities;
-using HR.Domain.Data.Entities.Enums;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+﻿using HR.Domain.Data.Entities.Enums;
 
 namespace HR.Application.Features.Employee.DTOs
 {

@@ -1,12 +1,11 @@
-﻿using HR.Domain.Data.Entities;
-using HR.Domain.Data.Entities.Enums;
+﻿using HR.Domain.Data.Entities.Enums;
 using HR.Domain.Events.Employee;
 using HR.Domain.UnitOfWork;
 using MediatR;
 
 namespace HR.Application.Features.Account.Handlers
 {
-    public class LeaveAllocationHandler (IUnitOfWork unitOfWork) : INotificationHandler<EmployeeRegistered>
+    public class LeaveAllocationHandler(IUnitOfWork unitOfWork) : INotificationHandler<EmployeeRegistered>
     {
         public async Task Handle(EmployeeRegistered notification, CancellationToken cancellationToken)
         {
@@ -30,7 +29,7 @@ namespace HR.Application.Features.Account.Handlers
                     allocatedDays = (int)Math.Round(proportion);
                 }
 
-                var newBalance = new EmployeeLeaveBalance
+                var newBalance = new Domain.Data.Entities.EmployeeLeaveBalance
                 {
                     EmployeeId = employee.Id,
                     LeaveTypeId = leaveType.Id,

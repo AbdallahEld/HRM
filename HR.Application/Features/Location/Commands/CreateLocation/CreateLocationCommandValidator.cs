@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using HR.Application.Features.Location.Commands.Shared;
+﻿using HR.Application.Features.Location.Commands.Shared;
 
 namespace HR.Application.Features.Location.Commands.CreateLocation
 {
@@ -7,7 +6,7 @@ namespace HR.Application.Features.Location.Commands.CreateLocation
     {
         public CreateLocationCommandValidator()
         {
-            
+
         }
     }
 }

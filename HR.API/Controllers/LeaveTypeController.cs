@@ -3,23 +3,15 @@ using HR.Application.Features.LeaveTypes.Commands.DeleteLeaveType;
 using HR.Application.Features.LeaveTypes.Commands.UpdateLeaveType;
 using HR.Application.Features.LeaveTypes.Queries.GetAllLeaveTypes;
 using HR.Application.Features.LeaveTypes.Queries.GetLeaveTypeById;
-using HR.Application.Features.Shift.Commands.CreateShift;
-using HR.Application.Features.Shift.Commands.DeleteShift;
-using HR.Application.Features.Shift.Commands.UpdateShift;
-using HR.Application.Features.Shift.DTOs;
-using HR.Application.Features.Shift.Querries.GetAllShifts;
-using HR.Application.Features.Shift.Querries.GetShiftById;
-using HR.Application.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HR.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LeaveTypeController (
+    public class LeaveTypeController(
         IMediator mediator) : ControllerBase
     {
         [HttpGet]
@@ -33,8 +25,8 @@ namespace HR.API.Controllers
         public async Task<ActionResult> GetById([FromRoute] int id)
         {
             var response = await mediator.Send(new GetLeaveTypeByIdQuery(id));
-            
-            if(!response.Success)
+
+            if (!response.Success)
             {
                 return NotFound(response);
             }

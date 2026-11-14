@@ -1,17 +1,15 @@
 ﻿using HR.Application.Features.LocationShifts.Commands.AssignShiftToLocation;
 using HR.Application.Features.LocationShifts.Queries.GetLocationAllShifts;
 using HR.Application.Features.LocationShifts.Queries.GetShiftAllLocations;
-using HR.Application.Features.Shift.Querries.GetAllShifts;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HR.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LocationShiftController (
+    public class LocationShiftController(
         IMediator mediator) : ControllerBase
     {
         [HttpGet("location/{locationId:int}")]

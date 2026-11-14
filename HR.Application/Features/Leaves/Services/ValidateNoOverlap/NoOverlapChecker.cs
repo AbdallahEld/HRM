@@ -1,6 +1,4 @@
 ﻿using HR.Application.Shared;
-using HR.Domain.Data.Entities;
-using HR.Domain.UnitOfWork;
 
 namespace HR.Application.Features.Leave.Services.ValidateNoOverlap
 {

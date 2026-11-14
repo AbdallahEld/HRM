@@ -5,13 +5,13 @@ using MediatR;
 
 namespace HR.Application.Features.LeaveTypes.Queries.GetLeaveTypeById
 {
-    public class GetLeaveTypeByIdQueryHandler (
+    public class GetLeaveTypeByIdQueryHandler(
         IUnitOfWork unitOfWork) : IRequestHandler<GetLeaveTypeByIdQuery, ApiResponse<LeaveTypeReadDTO>>
     {
         public async Task<ApiResponse<LeaveTypeReadDTO>> Handle(GetLeaveTypeByIdQuery request, CancellationToken cancellationToken)
         {
             var leaveType = await unitOfWork._LeaveTypeRepository.GetByIdAsync(request.Id);
-            
+
             if (leaveType == null)
             {
                 return ApiResponse<LeaveTypeReadDTO>.FailureResponse(new List<string> { "Leave type not found" }, "Leave type not found");

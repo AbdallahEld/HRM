@@ -1,12 +1,9 @@
 ﻿using HR.Application.Common.Interfaces;
-using HR.Domain.Data.Entities;
-using HR.Domain.Data.Entities.Identity;
 using HR.Domain.Repository;
 using HR.Domain.UnitOfWork;
 using HR.Infrastructure.Identity.JWT;
 using HR.Infrastructure.Persistance;
 using HR.Infrastructure.Repository;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,14 +12,14 @@ namespace HR.Infrastructure.Extensions
 {
     public static class InfrastructureServices
     {
-        public static void AddInfrastructure (this IServiceCollection services, IConfiguration configuration)
+        public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<HRDbContext> (options =>
+            services.AddDbContext<HRDbContext>(options =>
             {
-                options.UseSqlServer (connectionString);
+                options.UseSqlServer(connectionString);
             });
-            
+
 
             services.AddScoped<IAttendanceRepository, AttendanceRepository>();
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();

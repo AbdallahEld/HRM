@@ -1,5 +1,4 @@
 ﻿using HR.Domain.Data.Entities.Enums;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HR.Domain.Data.Entities
 {

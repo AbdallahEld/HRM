@@ -1,7 +1,5 @@
-﻿using FluentValidation;
-using HR.Application.Shared;
+﻿using HR.Application.Shared;
 using Microsoft.AspNetCore.Diagnostics;
-using System.ComponentModel.DataAnnotations;
 
 namespace HR.API.ExceptionHandling
 {
@@ -11,11 +9,11 @@ namespace HR.API.ExceptionHandling
         {
             httpContext.Response.ContentType = "application/json";
 
-            if(exception is FluentValidation.ValidationException validationException)
+            if (exception is FluentValidation.ValidationException validationException)
             {
                 httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
 
-                var errors =  validationException.Errors.Select(e => $"{e.PropertyName}: {e.ErrorMessage}").ToList();
+                var errors = validationException.Errors.Select(e => $"{e.PropertyName}: {e.ErrorMessage}").ToList();
 
                 var response = ApiResponse<object>.FailureResponse(errors, "Validation failed");
                 await httpContext.Response.WriteAsJsonAsync(response, cancellationToken);

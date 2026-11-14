@@ -1,5 +1,4 @@
-﻿using FluentValidation.Results;
-using HR.Application.Shared;
+﻿using HR.Application.Shared;
 using HR.Domain.UnitOfWork;
 
 
@@ -23,9 +22,9 @@ namespace HR.Application.Features.Departments.Services
                 {
                     $"Parent department with ID {parentId} not found."
                 };
-                return ApiResponse<int>.FailureResponse(errors ,$"Parent department retrieve failed");
+                return ApiResponse<int>.FailureResponse(errors, $"Parent department retrieve failed");
             }
-                
+
 
             var children = await _unitOfWork._DepartmentRepository
                                             .FindAsync(d =>
@@ -38,9 +37,9 @@ namespace HR.Application.Features.Departments.Services
             if ((otherChildrenHeadCount + newHeadCount) > parentDepartment.HeadCount)
             {
                 var availableCapacity = parentDepartment.HeadCount - otherChildrenHeadCount;
-                return ApiResponse<int>.FailureResponse(new List<string> { 
+                return ApiResponse<int>.FailureResponse(new List<string> {
                     $"Cannot set headcount to {newHeadCount}." +
-                    $" Available capacity in parent department is {availableCapacity}." 
+                    $" Available capacity in parent department is {availableCapacity}."
                 }, $"Headcount validation failed");
             }
 

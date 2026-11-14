@@ -1,18 +1,17 @@
 ﻿using HR.Application.Shared;
-using HR.Domain.Data.Entities;
 using HR.Domain.UnitOfWork;
 using MediatR;
 
 namespace HR.Application.Features.Shift.Commands.UpdateShift
 {
-    public class UpdateShiftCommandHandler (
+    public class UpdateShiftCommandHandler(
         IUnitOfWork unitOfWork) : IRequestHandler<UpdateShiftCommand, ApiResponse<int>>
     {
         public async Task<ApiResponse<int>> Handle(UpdateShiftCommand request, CancellationToken cancellationToken)
         {
             var shift = await unitOfWork._ShiftRepository.GetByIdAsync(request.Id);
 
-            if(shift == null) 
+            if (shift == null)
             {
                 throw new Exception($"Shift With Id = {request.Id} is not Found");
             }

@@ -1,11 +1,10 @@
 ﻿using HR.Application.Shared;
-using HR.Domain.Data.Entities;
 using HR.Domain.UnitOfWork;
 using MediatR;
 
 namespace HR.Application.Features.Location.Commands.UpdateLocation
 {
-    public class UpdateLocationCommandHandler (
+    public class UpdateLocationCommandHandler(
         IUnitOfWork unitOfWork) : IRequestHandler<UpdateLocationCommand, ApiResponse<int>>
     {
         public async Task<ApiResponse<int>> Handle(UpdateLocationCommand request, CancellationToken cancellationToken)

@@ -5,6 +5,7 @@ using HR.Application.Features.Departments.Services;
 using HR.Application.Features.Leave.Services.ValidateLeaveBalance;
 using HR.Application.Features.Leave.Services.ValidateNoOverlap;
 using HR.Application.Features.Leave.Services.ValidatePastDate;
+using HR.Application.Features.Leaves.Services.ValidateActualManager;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,6 +26,7 @@ namespace HR.Application.Extensions
             services.AddScoped<ILeaveBalanceChecker, LeaveBalanceChecker>();
             services.AddScoped<IPastDateChecker, PastDateChecker>();
             services.AddScoped<IClockService, ClockService>();
+            services.AddScoped<IValidateActualManager, ValidateActualManager>();
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using HR.Domain.Data.Entities.Enums;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HR.Domain.Data.Entities
 {

@@ -1,15 +1,11 @@
 ﻿using HR.Application.Features.Departments.DTOs;
 using HR.Application.Shared;
-using HR.Domain.Repository;
 using HR.Domain.UnitOfWork;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HR.Application.Features.Departments.Queries.GetAllDepartments
 {
-    public class GetAllDepartmentsQueryHandler (
+    public class GetAllDepartmentsQueryHandler(
         IUnitOfWork unitOfWork) : IRequestHandler<GetAllDepartmentsQuery, ApiResponse<IEnumerable<DepartmentReadDTO>>>
     {
         public async Task<ApiResponse<IEnumerable<DepartmentReadDTO>>> Handle(GetAllDepartmentsQuery request, CancellationToken cancellationToken)

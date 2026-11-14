@@ -1,11 +1,8 @@
 ﻿using HR.Domain.Repository;
-using HR.Infrastructure.Migrations;
 using HR.Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
-using System.Globalization;
-using System.Linq.Expressions;
 using System.Linq.Dynamic.Core;
-using static System.Net.WebRequestMethods;
+using System.Linq.Expressions;
 
 namespace HR.Infrastructure.Repository
 {

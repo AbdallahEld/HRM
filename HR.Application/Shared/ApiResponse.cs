@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace HR.Application.Shared
+﻿namespace HR.Application.Shared
 {
     public class ApiResponse<T>
     {

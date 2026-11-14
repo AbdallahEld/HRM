@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HR.Application.Features.Departments.DTOs
+﻿namespace HR.Application.Features.Departments.DTOs
 {
     public class DepartmentReadDTO
     {

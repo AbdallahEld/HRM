@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using HR.Application.Features.Shift.Commands.Shared;
+﻿using HR.Application.Features.Shift.Commands.Shared;
 
 namespace HR.Application.Features.Shift.Commands.CreateShift
 {

@@ -1,10 +1,8 @@
 ﻿using HR.Application.Features.Departments.Commands.CreateDepartment;
 using HR.Application.Features.Departments.Commands.DeleteDepartment;
 using HR.Application.Features.Departments.Commands.UpdateDepartment;
-using HR.Application.Features.Departments.DTOs;
 using HR.Application.Features.Departments.Queries.GetAllDepartments;
 using HR.Application.Features.Departments.Queries.GetDepartmentById;
-using HR.Application.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +11,7 @@ namespace HR.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DepartmentController (
+    public class DepartmentController(
         IMediator mediator) : ControllerBase
     {
         [HttpGet]
@@ -31,7 +29,7 @@ namespace HR.API.Controllers
 
         [HttpGet("{id:int}")]
         [Authorize(Roles = "HRManager,SystemAdmin")]
-        public async Task<ActionResult> GetById ([FromRoute] int id)
+        public async Task<ActionResult> GetById([FromRoute] int id)
         {
             var response = await mediator.Send(new GetDepartmentByIdQuery(id));
             if (!response.Success)
@@ -61,7 +59,7 @@ namespace HR.API.Controllers
             command.Id = id;
 
             var response = await mediator.Send(command);
-            if(!response.Success)
+            if (!response.Success)
             {
                 return BadRequest(response);
             }
@@ -71,9 +69,9 @@ namespace HR.API.Controllers
 
         [HttpDelete("{id:int}")]
         [Authorize(Roles = "SystemAdmin")]
-        public async Task<IActionResult> Delete([FromRoute] int id) 
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            await mediator.Send(new DeleteDepartmentCommand(id)); 
+            await mediator.Send(new DeleteDepartmentCommand(id));
             return NoContent();
         }
     }

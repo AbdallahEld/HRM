@@ -4,7 +4,6 @@ using HR.Application.Features.Account.DTOs;
 using HR.Domain.Data.Entities.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,7 +43,7 @@ namespace HR.API.Controllers
             return Created(string.Empty, new { Message = "Employee registered successfully." });
         }
         [HttpPost("login")]
-        public async Task <IActionResult> Login(LoginDTO model)
+        public async Task<IActionResult> Login(LoginDTO model)
         {
             var User = await _userManager.FindByEmailAsync(model.Email);
             if (User == null)

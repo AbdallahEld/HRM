@@ -2,14 +2,13 @@
 using HR.Application.Features.Leave.Services.ValidateNoOverlap;
 using HR.Application.Features.Leave.Services.ValidatePastDate;
 using HR.Application.Shared;
-using HR.Domain.Data.Entities;
 using HR.Domain.Data.Entities.Enums;
 using HR.Domain.UnitOfWork;
 using MediatR;
 
 namespace HR.Application.Features.Leave.Commands.SubmitLeaveRequest
 {
-    public class SubmitLeaveRequestCommandHandler (
+    public class SubmitLeaveRequestCommandHandler(
         IUnitOfWork unitOfWork,
         INoOverlapChecker noOverlapChecker,
         ILeaveBalanceChecker leaveBalanceChecker,
@@ -19,7 +18,7 @@ namespace HR.Application.Features.Leave.Commands.SubmitLeaveRequest
         {
             var leaveType = await unitOfWork._LeaveTypeRepository.GetAsync(leaveType => leaveType.Id == request.LeaveTypeId);
             if (leaveType == null)
-                return ApiResponse<string>.FailureResponse(new List<string> 
+                return ApiResponse<string>.FailureResponse(new List<string>
                 {
                     "Leave type not found."
                 });
@@ -28,7 +27,7 @@ namespace HR.Application.Features.Leave.Commands.SubmitLeaveRequest
                 .GetAllAsync(leave => leave.EmployeeId == request.EmployeeId && leave.LeaveTypeId == request.LeaveTypeId);
 
             var result = noOverlapChecker
-                .ValidateNoOverlap(request.StartDate , request.EndDate , existingLeaves);
+                .ValidateNoOverlap(request.StartDate, request.EndDate, existingLeaves);
             if (!result.Success)
             {
                 return ApiResponse<string>.FailureResponse(result.Errors);
@@ -45,7 +44,7 @@ namespace HR.Application.Features.Leave.Commands.SubmitLeaveRequest
             }
 
             var result2 = await leaveBalanceChecker
-                .ValidateLeaveBalanceAsync(request.LeaveTypeId, requestedDays,request.EmployeeId);
+                .ValidateLeaveBalanceAsync(request.LeaveTypeId, requestedDays, request.EmployeeId);
             if (!result2.Success)
             {
                 return ApiResponse<string>.FailureResponse(result2.Errors);

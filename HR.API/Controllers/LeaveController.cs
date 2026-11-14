@@ -1,5 +1,6 @@
 ﻿using HR.Application.Features.Leave.Commands.SubmitLeaveRequest;
 using HR.Application.Features.Leave.Queries.GetDepartmentLeaveRequests;
+using HR.Application.Features.Leaves.Commands.ApproveEmployeeLeave;
 using HR.Application.Features.Leaves.Queries.GetAllLeaveRequests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -37,6 +38,24 @@ namespace HR.API.Controllers
             query.ManagerId = int.Parse(departmentHeadIdClaim);
             
             var response = await mediator.Send(query);
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        [HttpPatch("ApproveLeaveRequest/{leaveId}")]
+        [Authorize(Roles = "DepartmentHead")]
+        public async Task<IActionResult> ApproveLeaveRequest([FromRoute] int leaveId)
+        {
+            var departmentHeadIdClaim = User.FindFirst("EmployeeId")?.Value;
+            if (departmentHeadIdClaim == null)
+            {
+                return Unauthorized(new { Message = "Invalid Token: Deparment Manager With ID not found." });
+            }
+            
+            var response = await mediator.Send(new ApproveEmployeeLeaveCommand(leaveId, int.Parse(departmentHeadIdClaim)));
             if (!response.Success)
             {
                 return BadRequest(response);

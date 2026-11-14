@@ -1,12 +1,11 @@
 ﻿using HR.Application.Shared;
-using HR.Domain.Data.Entities;
 using HR.Domain.UnitOfWork;
 using MediatR;
 
 namespace HR.Application.Features.Location.Commands.CreateLocation
 {
-    public class CreateLocationCommandHandler (
-        IUnitOfWork unitOfWork): IRequestHandler<CreateLocationCommand, ApiResponse<int>>
+    public class CreateLocationCommandHandler(
+        IUnitOfWork unitOfWork) : IRequestHandler<CreateLocationCommand, ApiResponse<int>>
     {
         public async Task<ApiResponse<int>> Handle(CreateLocationCommand request, CancellationToken cancellationToken)
         {

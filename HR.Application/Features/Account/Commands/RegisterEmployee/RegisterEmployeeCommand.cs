@@ -1,10 +1,6 @@
-﻿using HR.Application.Features.Account.DTOs;
-using HR.Application.Shared;
+﻿using HR.Application.Shared;
 using HR.Domain.Data.Entities.Enums;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HR.Application.Features.Account.Commands.RegisterEmployee
 {
