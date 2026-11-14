@@ -70,6 +70,11 @@ namespace HR.Domain.Data.Configuration
                     .WithOne(l => l.Approver) 
                     .HasForeignKey(l => l.ApproverId)
                     .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(e => e.DefaultShift)
+                   .WithMany(s => s.Employees)
+                   .HasForeignKey(e => e.DefaultShiftId)
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -791,7 +791,7 @@ namespace HR.Infrastructure.Migrations
                     b.HasOne("HR.Domain.Data.Entities.Shift", "DefaultShift")
                         .WithMany("Employees")
                         .HasForeignKey("DefaultShiftId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("HR.Domain.Data.Entities.Department", "Department")
