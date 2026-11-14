@@ -15,12 +15,14 @@ namespace HR.API.Controllers
         IMediator mediator) : ControllerBase
     {
         [HttpGet]
+        [Authorize(Roles = "HRManager,SystemAdmin")]
         public async Task<ActionResult> GetAll([FromQuery] GetAllEmployeesQuery query)
         {
             var employees = await mediator.Send(query);
             return Ok(ApiResponse<IEnumerable<EmployeeReadDTO>>.SuccessResponse(employees, "Employees retrieved successfully"));
         }
         [HttpGet("{id:int}")]
+        [Authorize(Roles = "HRManager,SystemAdmin,Employee")]
         public async Task<ActionResult> GetById([FromRoute] int id)
         {
             var employee = await mediator.Send(new GetEmployeeByIdQuery(id));
