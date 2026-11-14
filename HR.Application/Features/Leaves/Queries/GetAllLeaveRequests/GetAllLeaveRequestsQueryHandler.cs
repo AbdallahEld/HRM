@@ -2,15 +2,20 @@
 using HR.Application.Shared;
 using HR.Domain.UnitOfWork;
 using MediatR;
+using System.Linq.Expressions;
 
 namespace HR.Application.Features.Leaves.Queries.GetAllLeaveRequests
 {
     public class GetAllLeaveRequestsQueryHandler (
-        IUnitOfWork unitOfWork ) : IRequestHandler<GetAllLeaveRequestsQuery, ApiResponse<List<LeavesReadDTO>>>
+        IUnitOfWork unitOfWork ) : IRequestHandler<GetAllLeaveRequestsQuery, ApiResponse<IEnumerable<LeavesReadDTO>>>
     {
-        public async Task<ApiResponse<List<LeavesReadDTO>>> Handle(GetAllLeaveRequestsQuery request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<IEnumerable<LeavesReadDTO>>> Handle(GetAllLeaveRequestsQuery request, CancellationToken cancellationToken)
         {
-            var leaves = await unitOfWork._LeaveRepository.GetAllAsync();
+            var leaves = await unitOfWork._LeaveRepository.GetAllAsync(includes: new Expression<Func<HR.Domain.Data.Entities.Leave, object>>[]
+            {
+                l => l.Employee,
+                l => l.LeaveType
+            });
 
             var leavesDTO = leaves.Select(l => new LeavesReadDTO
             {
@@ -22,9 +27,10 @@ namespace HR.Application.Features.Leaves.Queries.GetAllLeaveRequests
                 EndDate = l.EndDate,
                 Status = l.Status,
                 TotalWorkingDays = l.TotalDays
-            }).ToList();
+            });
 
-            return ApiResponse<List<LeavesReadDTO>>.SuccessResponse(leavesDTO);
+            return ApiResponse<IEnumerable
+                <LeavesReadDTO>>.SuccessResponse(leavesDTO);
         }
     }
 }
