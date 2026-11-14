@@ -23,6 +23,14 @@ namespace HR.Application.Features.Leaves.Commands.ApproveEmployeeLeave
                 });
             }
 
+            if (leave.Status != LeaveStatus.Pending)
+            {
+                return ApiResponse<string>.FailureResponse(new List<string>
+                {
+                    "Leave request is not pending and cannot be approved."
+                });
+            }
+
             var valResult = await validateActualManager.ValidateManager(request.ManagerId, leave.EmployeeId);
             if (!valResult.Success)
             {
